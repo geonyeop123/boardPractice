@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boardPractice.mapper.BoardMapper">
+    <insert id="create">
+        INSERT INTO tbl_board(title, content, writer)
+        VALUES(#{title}, #{content}, #{writer})
+    </insert>
+
+    <select id="select" resultType="boardDTO">
+        SELECT bno, title, content, writer, regdate, viewcnt
+        FROM tbl_board
+        where bno = #{bno}
+    </select>
+
+    <update id="update">
+        UPDATE tbl_board
+        SET title =#{title}, content =#{content}
+        WHERE bno = #{bno}
+        AND writer = #{writer}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM tbl_board
+        WHERE bno = #{bno}
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM tbl_board
+        WHERE 1=1
+    </delete>
+    <select id="totalCnt" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_board
+    </select>
+
+    <select id="listAll" resultType="boardDTO">
+        <![CDATA[
+        SELECT bno, title, content, writer, regdate, viewcnt
+        FROM tbl_board
+        ORDER BY bno DESC
+        LIMIT #{offset}, #{pageSize}]]>
+    </select>
+
+</mapper>

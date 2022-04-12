@@ -1,0 +1,163 @@
+.mainContainer {
+    padding: 50px 500px 100px 500px;
+}
+
+.header {
+    border-bottom: black solid 2px;
+    height: 70px;
+    padding: 0 100px 0px 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navi {
+    display: flex;
+    height: 100%;
+}
+
+.navi .navi_contents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 30px 0 30px;
+    height: 100%;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.titleContainer {
+    border-bottom: gray solid 2px;
+    padding: 0px 0px 20px 0px;
+    margin-bottom : 20px;
+}
+
+table.board_table {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    width: 100%;
+}
+table.board_table thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #222222;
+    border-bottom: 3px solid black;
+}
+table.board_table tbody th {
+    width: 30px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+table.board_table td {
+    width: 50px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+table.board_table td.table_title {
+    width: 200px;
+}
+
+table.board_table td:last-child {
+    width: 30px;
+}
+
+.page_wrap {
+    text-align: center;
+    font-size: 0;
+    margin: 30px 0px 30px 0px;
+}
+.page_nation {
+    display: inline-block;
+}
+.page_nation .none {
+    display: none;
+}
+.page_nation a {
+    display: block;
+    margin: 0 3px;
+    float: left;
+    border: 1px solid #e6e6e6;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    background-color: #fff;
+    font-size: 13px;
+    color: #999999;
+    text-decoration: none;
+}
+.page_nation .arrow {
+    border: 1px solid #ccc;
+}
+.page_nation .prev {
+    background: #f8f8f8 url("/static/img/page_prev.png") no-repeat center
+    center;
+    margin-right: 7px;
+}
+.page_nation .next {
+    background: #f8f8f8 url("/static/img/page_next.png") no-repeat center
+    center;
+    margin-left: 7px;
+}
+.page_nation a.active {
+    background-color: #42454c;
+    color: #fff;
+    border: 1px solid #42454c;
+}
+
+.contentsContainer ul {
+    padding: 0 30px 0 30px;
+}
+
+.contentsContainer ul li {
+    width: 100%;
+}
+
+.contentsContainer ul li input {
+    width: 100%;
+    height: 30px;
+}
+.contentsContainer ul li textarea {
+    width: 100%;
+    min-height: 300px;
+}
+
+.contentsContainer ul li p {
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.contentsContainer ul li {
+    padding: 20px 0 20px 0;
+}
+
+.buttonContainer {
+    text-align: right;
+}
+
+.buttonContainer button {
+    height: 35px;
+    width: 60px;
+}
+.titleContainer {
+    width: 100%;
+    position: relative;
+}
+
+#write_btn {
+    position: absolute;
+    right: 0;
+    top: -10px;
+    width: 60px;
+    height: 30px;
+}
