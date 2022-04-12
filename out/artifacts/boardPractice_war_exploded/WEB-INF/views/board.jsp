@@ -44,7 +44,7 @@
                     </li>
                     <li class="buttonContainer">
                         <button type="button" id="list">목록</button>
-                        <button type="button" id="${setting=="RED" ? "modify" : "submit"}">${setting=="RED" ? "수정" : "등록"}</button>
+                        <button type="button" id="${setting=="RED" ? "modify" : "write"}">${setting=="RED" ? "수정" : "등록"}</button>
                         <c:if test='${setting=="RED"}'>
                             <button type="button" id="delete">삭제</button>
                         </c:if>
@@ -58,15 +58,16 @@
                 if(msg=="MOD_ERR") alert("수정 도중 에러가 발생하였습니다.");
                 if(msg=="MOD_OK") alert("성공적으로 수정되었습니다.");
 
-                $("#submit").on("click", function(){
-                    // const title = $("#title").val().trim();
-                    // const content = $("#content").val().trim();
-                    // if(title == "" || content == "") {
-                    //     alert("제목 혹은 본문 내용은 필수입니다.");
-                    //     return;
-                    // }
+                $("#write").on("click", function(){
+                    const title = $("#title").val().trim();
+                    const content = $("#content").val().trim();
+                    if(title == "" || content == "") {
+                        alert("제목 혹은 본문 내용은 필수입니다.");
+                        return;
+                    }
+                    const post_url = '${setting}' == 'WRT' ? '<c:url value="/board/write"/>' : '<c:url value="/board/modify"/>';
                     let form = $("#form");
-                    form.attr('action', '<c:url value="/board/remove"/>?page=${page}&pageSize=${pageSize}');
+                    form.attr('action', post_url);
                     form.attr('method', 'post');
                     form.submit();
                 })

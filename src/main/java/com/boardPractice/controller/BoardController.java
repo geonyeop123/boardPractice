@@ -94,7 +94,7 @@ public class BoardController {
     @PostMapping("/modify")
     public String modify(BoardDTO boardDTO, Model m, RedirectAttributes rttr){
         try{
-
+            boardDTO.setWriter("yeop");
             int resultCnt = service.modify(boardDTO);
             System.out.println("resultCnt = " + resultCnt);
             if(resultCnt != 1) throw new Exception();
@@ -125,6 +125,6 @@ public class BoardController {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return "redirect:/board/list";
+        return "redirect:/board/list?page=" + page + "&pageSize=" + pageSize;
     }
 }

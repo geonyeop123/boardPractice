@@ -71,6 +71,10 @@
     </div>
     <script>
         $(document).ready(function(){
+            const msg  = "${message}";
+            if(msg == "WRT_OK") alert("등록이 완료되었습니다!");
+            if(msg == "DEL_OK") alert("삭제가 완료되었습니다!");
+
             $("#write_btn").on("click",function(){
                 location.href='<c:url value="/board/write?page=${pageMaker.page}&pageSize=${pageMaker.pageSize}"/>';
             })
