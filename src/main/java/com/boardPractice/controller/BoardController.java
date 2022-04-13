@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +53,6 @@ public class BoardController {
     @PostMapping("/write")
     public String write(BoardDTO boardDTO, RedirectAttributes rttr){
         try{
-            System.out.println(boardDTO);
             boardDTO.setWriter("yeop");
             int resultCnt = service.write(boardDTO);
             if(resultCnt != 1) throw new Exception();
@@ -84,6 +84,8 @@ public class BoardController {
         try{
             BoardDTO boardDTO = service.select(bno);
             m.addAttribute(boardDTO);
+            m.addAttribute("page", page);
+            m.addAttribute("pageSize", pageSize);
             m.addAttribute("setting", "MOD");
         }catch(Exception e){
             e.printStackTrace();
@@ -92,20 +94,26 @@ public class BoardController {
     }
 
     @PostMapping("/modify")
-    public String modify(BoardDTO boardDTO, Model m, RedirectAttributes rttr){
+    public String modify(BoardDTO boardDTO,Integer page, Integer pageSize,
+                         RedirectAttributes rttr, Model m){
         try{
             boardDTO.setWriter("yeop");
             int resultCnt = service.modify(boardDTO);
-            System.out.println("resultCnt = " + resultCnt);
             if(resultCnt != 1) throw new Exception();
-
+            String uri = UriComponentsBuilder.newInstance()
+                         .queryParam("page", page)
+                         .queryParam("pageSize", pageSize)
+                         .queryParam("bno", boardDTO.getBno()).build().toString();
+            rttr.addFlashAttribute("setting", "MOD");
             rttr.addFlashAttribute("message", "MOD_OK");
-            m.addAttribute(boardDTO);
-
-            return "redirect:/board/board";
+            return "redirect:/board/board" + uri;
         }catch(Exception e){
+            System.out.println("error");
             rttr.addFlashAttribute("message", "MOD_ERR");
             m.addAttribute(boardDTO);
+            m.addAttribute("page", page);
+            m.addAttribute("pageSize", pageSize);
+            m.addAttribute("setting", "MOD");
             e.printStackTrace();
             return "redirect:/board/modify";
         }

@@ -33,6 +33,8 @@
                 <ul>
                     <li style="display: none">
                         <input type="text" name="bno" value="${boardDTO.bno}"/>
+                        <input type="text" name="page" value="${page}"/>
+                        <input type="text" name="pageSize" value="${pageSize}"/>
                     </li>
                     <li>
                         <p>제목</p>
