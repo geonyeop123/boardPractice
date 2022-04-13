@@ -27,6 +27,13 @@
     <div class="mainContainer">
         <div class="titleContainer">
             <h1 class="title">게시판</h1>
+            <div class="searchContainer">
+                <select>
+                    <option value="A">제목 + 내용</option>
+                    <option value="T">제목</option>
+                    <option value="C">내용</option>
+                </select>
+            </div>
             <div class="buttonContainer">
                 <button id="write_btn" type="button">글쓰기</button>
             </div>

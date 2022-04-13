@@ -41,6 +41,11 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    public List<BoardDTO> conditionList(PageMaker pm) throws Exception {
+        return boardDAO.conditionList(pm);
+    }
+
+    @Override
     public int totalCnt() throws Exception{
         return boardDAO.totalCnt();
     }

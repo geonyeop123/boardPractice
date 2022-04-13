@@ -17,5 +17,7 @@ public interface BoardService {
 
     List<BoardDTO> listAll(PageMaker pm) throws Exception;
 
+    List<BoardDTO> conditionList(PageMaker pm) throws Exception;
+
     int totalCnt() throws Exception;
 }

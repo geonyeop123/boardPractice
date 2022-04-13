@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        locations = {"applicationContext.xml"}
+        locations = {"file:src/main/webapp/WEB-INF/applicationContext.xml"}
 )
 public class ConnectionTest {
 

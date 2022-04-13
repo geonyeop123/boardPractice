@@ -2,6 +2,7 @@ package com.boardPractice.persistence;
 
 import com.boardPractice.domain.BoardDTO;
 import com.boardPractice.domain.PageMaker;
+import com.boardPractice.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -48,8 +49,17 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
+    public List<BoardDTO> conditionList(PageMaker pm) throws Exception {
+        return sqlSession.selectList(namespace + "conditionList", pm);
+    }
+
+    @Override
     public int totalCnt() throws Exception{
         return sqlSession.selectOne(namespace + "totalCnt");
     }
 
+    @Override
+    public int conditionListCnt(SearchCondition sc) throws Exception {
+        return sqlSession.selectOne(namespace + "conditionListCnt", sc);
+    }
 }

@@ -2,6 +2,7 @@ package com.boardPractice.controller;
 
 import com.boardPractice.domain.BoardDTO;
 import com.boardPractice.domain.PageMaker;
+import com.boardPractice.domain.SearchCondition;
 import com.boardPractice.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +24,11 @@ public class BoardController {
     BoardService service;
 
     @GetMapping("/list")
-    public String list(Integer page, Integer pageSize, Model m){
-       if(page == null) page = 1;
-       if(pageSize == null) pageSize = 10;
-
+    public String list(SearchCondition sc, Model m){
+        if(sc == null) sc = new SearchCondition(1, 10);
        try{
            int totalCnt = service.totalCnt();
-           PageMaker pm = new PageMaker(page, totalCnt);
+           PageMaker pm = new PageMaker(sc, totalCnt);
            List<BoardDTO> list = service.listAll(pm);
 
            m.addAttribute(list);
