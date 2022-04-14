@@ -29,7 +29,7 @@ public class BoardController {
        try{
            int totalCnt = service.totalCnt();
            PageMaker pm = new PageMaker(sc, totalCnt);
-           List<BoardDTO> list = service.listAll(pm);
+           List<BoardDTO> list = service.listAll(sc);
 
            m.addAttribute(list);
            m.addAttribute(pm);

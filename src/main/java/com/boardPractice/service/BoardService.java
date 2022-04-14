@@ -2,6 +2,7 @@ package com.boardPractice.service;
 
 import com.boardPractice.domain.BoardDTO;
 import com.boardPractice.domain.PageMaker;
+import com.boardPractice.domain.SearchCondition;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public interface BoardService {
 
     int delete(Integer bno) throws Exception;
 
-    List<BoardDTO> listAll(PageMaker pm) throws Exception;
+    List<BoardDTO> listAll(SearchCondition sc) throws Exception;
 
     List<BoardDTO> conditionList(PageMaker pm) throws Exception;
 

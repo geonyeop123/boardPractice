@@ -44,8 +44,8 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardDTO> listAll(PageMaker pm) throws Exception{
-        return sqlSession.selectList(namespace + "listAll", pm);
+    public List<BoardDTO> listAll(SearchCondition sc) throws Exception{
+        return sqlSession.selectList(namespace + "listAll", sc);
     }
 
     @Override

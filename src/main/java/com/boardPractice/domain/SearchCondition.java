@@ -1,10 +1,10 @@
 package com.boardPractice.domain;
 
 public class SearchCondition {
-    private Integer pageSize;
-    private Integer page;
-    private String option;
-    private String keyword;
+    private Integer pageSize = 10;
+    private Integer page = 1;
+    private String option = "";
+    private String keyword = "";
     private int offset;
 
 
@@ -24,6 +24,7 @@ public class SearchCondition {
         this(page, 10);
     }
 
+    SearchCondition(){}
 
     public Integer getPageSize() {
         return pageSize;

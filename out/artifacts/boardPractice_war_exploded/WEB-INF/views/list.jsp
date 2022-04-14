@@ -53,7 +53,7 @@
                 <c:forEach items="${boardDTOList}" var="list">
                     <tr>
                         <th scope="row">${list.bno}</th>
-                        <td class="table_title"><a href='<c:url value="/board/board?page=${pageMaker.page}&pageSize=${pageMaker.pageSize}&bno=${list.bno}"/>'>${list.title}</a></td>
+                        <td class="table_title"><a href='<c:url value="/board/board?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&bno=${list.bno}"/>'>${list.title}</a></td>
                         <td>${list.writer}</td>
                         <td><fmt:formatDate pattern="yyyy.mm.dd hh:mm" value="${list.regdate}"/></td>
                         <td>${list.viewcnt}</td>
@@ -64,13 +64,13 @@
             <div class="page_wrap">
                 <div class="page_nation">
                     <c:if test="${pageMaker.prev}">
-                        <a class="arrow prev" href="/board/list?page=${pageMaker.startPage - 1}&pageSize=${pageMaker.pageSize}">&lt;</a>
+                        <a class="arrow prev" href="/board/list?page=${pageMaker.startPage - 1}&pageSize=${pageMaker.sc.pageSize}">&lt;</a>
                     </c:if>
                         <c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                            <a class="${pageMaker.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${pageMaker.pageSize}">${i}</a>
+                            <a class="${pageMaker.sc.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${pageMaker.sc.pageSize}">${i}</a>
                         </c:forEach>
                     <c:if test="${pageMaker.next}">
-                        <a class="arrow next" href="/board/list?page=${pageMaker.endPage + 1}&pageSize=${pageMaker.pageSize}">&gt;</a>
+                        <a class="arrow next" href="/board/list?page=${pageMaker.endPage + 1}&pageSize=${pageMaker.sc.pageSize}">&gt;</a>
                     </c:if>
                 </div>
             </div>
@@ -83,7 +83,7 @@
             if(msg == "DEL_OK") alert("삭제가 완료되었습니다!");
 
             $("#write_btn").on("click",function(){
-                location.href='<c:url value="/board/write?page=${pageMaker.page}&pageSize=${pageMaker.pageSize}"/>';
+                location.href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}"/>';
             })
         })
     </script>

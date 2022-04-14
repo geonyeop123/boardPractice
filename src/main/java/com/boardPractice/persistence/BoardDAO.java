@@ -18,7 +18,7 @@ public interface BoardDAO {
 
     int deleteAll() throws Exception;
 
-    List<BoardDTO> listAll(PageMaker pm) throws Exception;
+    List<BoardDTO> listAll(SearchCondition sc) throws Exception;
 
     List<BoardDTO> conditionList(PageMaker pm) throws Exception;
 

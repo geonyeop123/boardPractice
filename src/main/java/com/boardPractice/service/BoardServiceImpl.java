@@ -2,6 +2,7 @@ package com.boardPractice.service;
 
 import com.boardPractice.domain.BoardDTO;
 import com.boardPractice.domain.PageMaker;
+import com.boardPractice.domain.SearchCondition;
 import com.boardPractice.persistence.BoardDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,8 +37,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDTO> listAll(PageMaker pm) throws Exception{
-        return boardDAO.listAll(pm);
+    public List<BoardDTO> listAll(SearchCondition sc) throws Exception{
+        return boardDAO.listAll(sc);
     }
 
     @Override
