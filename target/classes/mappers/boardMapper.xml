@@ -8,7 +8,7 @@
         VALUES(#{title}, #{content}, #{writer})
     </insert>
 
-    <select id="select" resultType="boardDTO">
+    <select id="select" resultType="boardVO">
         SELECT bno, title, content, writer, regdate, viewcnt
         FROM tbl_board
         where bno = #{bno}
@@ -35,7 +35,7 @@
         FROM tbl_board
     </select>
 
-    <select id="listAll" resultType="boardDTO">
+    <select id="listAll" resultType="boardVO">
         <![CDATA[
         SELECT bno, title, content, writer, regdate, viewcnt
         FROM tbl_board
@@ -43,7 +43,7 @@
         LIMIT #{offset}, #{pageSize}]]>
     </select>
 
-    <select id="conditionList" resultType="boardDTO">
+    <select id="conditionList" resultType="boardVO">
         SELECT bno, title, content, writer, regdate, viewcnt
         FROM tbl_board
         WHERE 1=1

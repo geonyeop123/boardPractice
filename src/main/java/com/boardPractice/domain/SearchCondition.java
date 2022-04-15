@@ -5,13 +5,11 @@ public class SearchCondition {
     private Integer page = 1;
     private String option = "";
     private String keyword = "";
-    private int offset;
 
 
     public SearchCondition(Integer page, Integer pageSize){
         this.page = page;
         this.pageSize = pageSize;
-        this.offset = (page - 1) * pageSize;
     }
 
     public SearchCondition(Integer page, Integer pageSize, String option, String keyword) {
@@ -59,12 +57,9 @@ public class SearchCondition {
     }
 
     public int getOffset() {
-        return offset;
+        return (page - 1) * pageSize;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
 
     @Override
     public String toString() {
@@ -73,7 +68,6 @@ public class SearchCondition {
                 ", page=" + page +
                 ", option='" + option + '\'' +
                 ", keyword='" + keyword + '\'' +
-                ", offset=" + offset +
                 '}';
     }
 }

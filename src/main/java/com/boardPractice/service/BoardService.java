@@ -1,24 +1,24 @@
 package com.boardPractice.service;
 
-import com.boardPractice.domain.BoardDTO;
+
+import com.boardPractice.domain.BoardVO;
 import com.boardPractice.domain.PageMaker;
 import com.boardPractice.domain.SearchCondition;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BoardService {
-    int write(BoardDTO boardDTO) throws Exception;
+    String write(BoardVO boardVO) throws Exception;
 
-    BoardDTO select(Integer bno) throws Exception;
+    BoardVO select(Integer bno) throws Exception;
 
-    int modify(BoardDTO boardDTO) throws Exception;
+    String modify(BoardVO boardVO) throws Exception;
 
-    int delete(Integer bno) throws Exception;
+    String delete(Integer bno) throws Exception;
 
-    List<BoardDTO> listAll(SearchCondition sc) throws Exception;
+    List<BoardVO> listAll(SearchCondition sc) throws Exception;
 
-    List<BoardDTO> conditionList(PageMaker pm) throws Exception;
+    List<BoardVO> conditionList(PageMaker pm) throws Exception;
 
     int totalCnt() throws Exception;
 }

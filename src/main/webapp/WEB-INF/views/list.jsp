@@ -50,10 +50,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${boardDTOList}" var="list">
+                <c:forEach items="${boardVOList}" var="list">
                     <tr>
                         <th scope="row">${list.bno}</th>
-                        <td class="table_title"><a href='<c:url value="/board/board?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&bno=${list.bno}"/>'>${list.title}</a></td>
+                        <td class="table_title"><a href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&bno=${list.bno}&action=MOD"/>'>${list.title}</a></td>
                         <td>${list.writer}</td>
                         <td><fmt:formatDate pattern="yyyy.mm.dd hh:mm" value="${list.regdate}"/></td>
                         <td>${list.viewcnt}</td>
@@ -83,7 +83,7 @@
             if(msg == "DEL_OK") alert("삭제가 완료되었습니다!");
 
             $("#write_btn").on("click",function(){
-                location.href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}"/>';
+                location.href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&action=WRT"/>';
             })
         })
     </script>

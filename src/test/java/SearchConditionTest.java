@@ -1,14 +1,13 @@
-import com.boardPractice.domain.BoardDTO;
+import com.boardPractice.domain.BoardVO;
 import com.boardPractice.domain.PageMaker;
 import com.boardPractice.domain.SearchCondition;
 import com.boardPractice.persistence.BoardDAO;
+import com.boardPractice.service.BoardService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
@@ -18,6 +17,20 @@ public class SearchConditionTest {
     
     @Autowired
     BoardDAO dao;
+
+    @Autowired
+    BoardService service;
+
+    @Test
+    public void dummyData()throws Exception{
+        dao.deleteAll();
+        for(int i = 0; i < 230;i++){
+            BoardVO vo = new BoardVO("title" + i, "content" + i, "yeop");
+            dao.create(vo);
+        }
+
+    }
+
     
     @Test
     public void listTest(){
