@@ -27,13 +27,13 @@
     <div class="mainContainer">
         <div class="titleContainer">
             <h1 class="title">게시판</h1>
-            <div class="searchContainer">
-                <select>
-                    <option value="A">제목 + 내용</option>
-                    <option value="T">제목</option>
-                    <option value="C">내용</option>
-                </select>
-            </div>
+<%--            <div class="searchContainer">--%>
+<%--                <select>--%>
+<%--                    <option value="A">제목 + 내용</option>--%>
+<%--                    <option value="T">제목</option>--%>
+<%--                    <option value="C">내용</option>--%>
+<%--                </select>--%>
+<%--            </div>--%>
             <div class="buttonContainer">
                 <button id="write_btn" type="button">글쓰기</button>
             </div>
@@ -53,7 +53,7 @@
                 <c:forEach items="${boardVOList}" var="list">
                     <tr>
                         <th scope="row">${list.bno}</th>
-                        <td class="table_title"><a href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&bno=${list.bno}&action=MOD"/>'>${list.title}</a></td>
+                        <td class="table_title"><a href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>${list.title}</a></td>
                         <td>${list.writer}</td>
                         <td><fmt:formatDate pattern="yyyy.mm.dd hh:mm" value="${list.regdate}"/></td>
                         <td>${list.viewcnt}</td>
@@ -63,14 +63,14 @@
             </table>
             <div class="page_wrap">
                 <div class="page_nation">
-                    <c:if test="${pageMaker.prev}">
-                        <a class="arrow prev" href="/board/list?page=${pageMaker.startPage - 1}&pageSize=${pageMaker.sc.pageSize}">&lt;</a>
+                    <c:if test="${boardVOList.get(0).pageMaker.prev}">
+                        <a class="arrow prev" href="/board/list?page=${boardVOList.get(0).pageMaker.startPage - 1}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">&lt;</a>
                     </c:if>
-                        <c:forEach var="i" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                            <a class="${pageMaker.sc.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${pageMaker.sc.pageSize}">${i}</a>
+                        <c:forEach var="i" begin="${boardVOList.get(0).pageMaker.startPage}" end="${boardVOList.get(0).pageMaker.endPage}">
+                            <a class="${boardVOList.get(0).pageMaker.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">${i}</a>
                         </c:forEach>
-                    <c:if test="${pageMaker.next}">
-                        <a class="arrow next" href="/board/list?page=${pageMaker.endPage + 1}&pageSize=${pageMaker.sc.pageSize}">&gt;</a>
+                    <c:if test="${boardVOList.get(0).pageMaker.next}">
+                        <a class="arrow next" href="/board/list?page=${boardVOList.get(0).pageMaker.endPage + 1}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">&gt;</a>
                     </c:if>
                 </div>
             </div>
@@ -78,12 +78,9 @@
     </div>
     <script>
         $(document).ready(function(){
-            const msg  = "${message}";
-            if(msg == "WRT_OK") alert("등록이 완료되었습니다!");
-            if(msg == "DEL_OK") alert("삭제가 완료되었습니다!");
 
             $("#write_btn").on("click",function(){
-                location.href='<c:url value="/board/write?page=${pageMaker.sc.page}&pageSize=${pageMaker.sc.pageSize}&action=WRT"/>';
+                location.href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&action=WRT"/>';
             })
         })
     </script>

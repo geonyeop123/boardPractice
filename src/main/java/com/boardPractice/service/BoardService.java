@@ -8,17 +8,11 @@ import com.boardPractice.domain.SearchCondition;
 import java.util.List;
 
 public interface BoardService {
-    String write(BoardVO boardVO) throws Exception;
 
-    BoardVO select(Integer bno) throws Exception;
+    List<BoardVO> list(BoardVO boardVO) throws Exception;
 
-    String modify(BoardVO boardVO) throws Exception;
+    BoardVO write(BoardVO boardVO) throws Exception;
 
-    String delete(Integer bno) throws Exception;
+    String proc(BoardVO boardVO) throws Exception;
 
-    List<BoardVO> listAll(SearchCondition sc) throws Exception;
-
-    List<BoardVO> conditionList(PageMaker pm) throws Exception;
-
-    int totalCnt() throws Exception;
 }

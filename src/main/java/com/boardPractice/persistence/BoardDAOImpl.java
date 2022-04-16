@@ -43,8 +43,8 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardVO> listAll(SearchCondition sc) throws Exception{
-        return sqlSession.selectList(namespace + "listAll", sc);
+    public List<BoardVO> listAll(BoardVO boardVO) throws Exception{
+        return sqlSession.selectList(namespace + "listAll", boardVO);
     }
 
     @Override

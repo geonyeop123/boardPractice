@@ -3,7 +3,8 @@ package com.boardPractice.domain;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class PageMaker {
-    private SearchCondition sc;
+    private int page;
+    private int pageSize;
     private int totalCnt;
     private int naviSize = 10;
     private int startPage;
@@ -14,21 +15,30 @@ public class PageMaker {
     PageMaker(){}
 
 
-    public PageMaker(SearchCondition sc, int totalCnt){
-        this.sc = sc;
+    public PageMaker(Integer page, Integer pageSize, int totalCnt){
+        this.page = page;
+        this.pageSize = pageSize;
         this.totalCnt = totalCnt;
-        startPage = (sc.getPage() - 1) / 10 * 10 + 1;
+        startPage = (page - 1) / 10 * 10 + 1;
         endPage = Math.min(startPage + naviSize - 1, (int)Math.ceil(totalCnt / (double)naviSize));
         prev = startPage != 1 ? true  : false;
         next = endPage < (int)Math.ceil(totalCnt / (double)naviSize) ? true : false;
     }
 
-    public SearchCondition getSc() {
-        return sc;
+    public int getPage() {
+        return page;
     }
 
-    public void setSc(SearchCondition sc) {
-        this.sc = sc;
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
     public int getTotalCnt() {
@@ -80,7 +90,7 @@ public class PageMaker {
     }
 
     public void showPage(){
-        System.out.println("page : " + sc.getPage());
+        System.out.println("page : " + page);
         System.out.print(prev ? "[PREV]" : "");
         for(int i = startPage; i <= endPage; i++){
             System.out.print(i + " ");
@@ -91,7 +101,8 @@ public class PageMaker {
     @Override
     public String toString() {
         return "PageMaker{" +
-                "sc=" + sc +
+                "page=" + page +
+                ", pageSize=" + pageSize +
                 ", totalCnt=" + totalCnt +
                 ", naviSize=" + naviSize +
                 ", startPage=" + startPage +
