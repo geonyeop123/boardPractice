@@ -26,28 +26,29 @@
     </div>
     <div class="mainContainer">
         <div class="titleContainer">
-            <h1 class="title bold">${setting=="MOD" ? "글 수정" : (setting=="WRT" ? "글 작성" : "게시물")}</h1>
+            <h1 class="title bold">${action=="MOD" ? "글 수정" : (action=="WRT" ? "글 작성" : "게시물")}</h1>
         </div>
         <form id="form">
             <div class="contentsContainer">
                 <ul>
                     <li style="display: none">
-                        <input type="text" name="bno" value="${boardDTO.bno}"/>
-                        <input type="text" name="page" value="${page}"/>
-                        <input type="text" name="pageSize" value="${pageSize}"/>
+                        <input type="text" name="bno" value="${boardVO.bno}"/>
+                        <input type="text" name="page" value="${boardVO.page}"/>
+                        <input type="text" name="pageSize" value="${boardVO.pageSize}"/>
+                        <input type="text" name="action" value="${action}"/>
                     </li>
                     <li>
                         <p>제목</p>
-                        <input type="text" id="title" name="title" value="${boardDTO.title}" ${(setting == "MOD" || setting == "WRT") ?  "" :"readonly"} />
+                        <input type="text" id="title" name="title" value="${boardVO.title}" ${(action == "MOD" || action == "WRT") ?  "" :"readonly"} />
                     </li>
                     <li>
                         <p>내용</p>
-                        <textarea id="content" name="content" ${(setting == "MOD" || setting == "WRT") ?  "" :"readonly"} >${boardDTO.content}</textarea>
+                        <textarea id="content" name="content" ${(action == "MOD" || action == "WRT") ?  "" :"readonly"} >${boardVO.content}</textarea>
                     </li>
                     <li class="buttonContainer">
                         <button type="button" id="list">목록</button>
-                        <button type="button" id="${setting=="RED" ? "modify" : "write"}">${setting=="RED" ? "수정" : "등록"}</button>
-                        <c:if test='${setting=="RED"}'>
+                        <button type="button" id="${action=="RED" ? "modify" : "write"}">${action=="RED" ? "수정" : "등록"}</button>
+                        <c:if test='${action=="RED"}'>
                             <button type="button" id="delete">삭제</button>
                         </c:if>
                     </li>
@@ -67,24 +68,20 @@
                         alert("제목 혹은 본문 내용은 필수입니다.");
                         return;
                     }
-                    const post_url = '${setting}' == 'WRT' ? '<c:url value="/board/write"/>' : '<c:url value="/board/modify"/>';
                     let form = $("#form");
-                    form.attr('action', post_url);
+                    form.attr('action', '<c:url value="/board/proc"/>');
                     form.attr('method', 'post');
                     form.submit();
                 })
 
                 $("#list").on("click", function(){
-                    location.href='<c:url value="/board/list?page=${page}&pageSize=${pageSize}"/>';
-                })
-                $("#modify").on("click", function(){
-                    location.href='<c:url value="/board/modify?page=${page}&pageSize=${pageSize}&bno=${boardDTO.bno}"/>';
+                    location.href='<c:url value="/board/list?page=${boardVO.page}&pageSize=${boardVO.pageSize}"/>';
                 })
 
                 $("#delete").on("click", function(){
                     let form = $("#form");
                     if(confirm("정말로 삭제하시겠습니까?")){
-                        form.attr('action', '<c:url value="/board/remove"/>?page=${page}&pageSize=${pageSize}');
+                        form.attr('action', '<c:url value="/board/proc"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}action=DEL');
                         form.attr('method', 'post');
                         form.submit();
                     }
