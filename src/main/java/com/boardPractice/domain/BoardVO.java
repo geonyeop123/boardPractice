@@ -13,15 +13,23 @@ public class BoardVO {
     // 2. 페이지에 대한 변수
     private Integer page;
     private Integer pageSize;
-    private String action;
 
-    // 3. 게시물에 대한 변수
+    // 3. 로직 처리를 위한 변수
+    private String action;
+    private boolean comment;
+    private Integer parentBno;
+
+    // 4. 게시물에 대한 변수
     private Integer bno;
+    private Integer ref;
+    private Integer step;
+    private Integer depth;
     private String title;
     private String content;
     private String writer;
     private Date regdate;
-    private Integer viewcnt;
+    private String blindYn;
+
 
 
     public BoardVO(String title, String content, String writer){
@@ -45,6 +53,31 @@ public class BoardVO {
     public void setBno(Integer bno) {
         this.bno = bno;
     }
+
+    public Integer getRef() {
+        return ref;
+    }
+
+    public void setRef(Integer ref) {
+        this.ref = ref;
+    }
+
+    public Integer getStep() {
+        return step;
+    }
+
+    public void setStep(Integer step) {
+        this.step = step;
+    }
+
+    public Integer getDepth() {
+        return depth;
+    }
+
+    public void setDepth(Integer depth) {
+        this.depth = depth;
+    }
+
 
     public String getTitle() {
         return title;
@@ -78,12 +111,12 @@ public class BoardVO {
         this.regdate = regdate;
     }
 
-    public Integer getViewcnt() {
-        return viewcnt;
+    public String getBlindYn() {
+        return blindYn;
     }
 
-    public void setViewcnt(Integer viewcnt) {
-        this.viewcnt = viewcnt;
+    public void setBlindYn(String blindYn) {
+        this.blindYn = blindYn;
     }
 
     public PageMaker getPageMaker() {
@@ -100,6 +133,22 @@ public class BoardVO {
 
     public void setAction(String action) {
         this.action = action;
+    }
+
+    public boolean isComment() {
+        return comment;
+    }
+
+    public void setComment(boolean comment) {
+        this.comment = comment;
+    }
+
+    public Integer getParentBno() {
+        return parentBno;
+    }
+
+    public void setParentBno(Integer parentBno) {
+        this.parentBno = parentBno;
     }
 
     public Integer getPage() {
@@ -152,12 +201,17 @@ public class BoardVO {
                 ", page=" + page +
                 ", pageSize=" + pageSize +
                 ", action='" + action + '\'' +
+                ", comment=" + comment +
+                ", parentBno=" + parentBno +
                 ", bno=" + bno +
+                ", ref=" + ref +
+                ", step=" + step +
+                ", depth=" + depth +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
                 ", regdate=" + regdate +
-                ", viewcnt=" + viewcnt +
+                ", blindYn='" + blindYn + '\'' +
                 '}';
     }
 }

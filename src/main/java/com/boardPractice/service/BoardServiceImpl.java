@@ -79,6 +79,7 @@ public class BoardServiceImpl implements BoardService {
 
         // 메시지의 형태는 action_OK action_ERR 이므로, 미리 action 값으로 초기화
         String message = boardVO.getAction();
+        BoardVO refVO = null;
         int resultCnt = 0;
 
         // 1. 로그인 작업이 없기 때문에 writer 하드코딩
@@ -87,9 +88,27 @@ public class BoardServiceImpl implements BoardService {
         // 2. action에 따라 처리
             // 2-1 WRT(쓰기)인 경우
             if("WRT".equals(boardVO.getAction())){
-                // 2-1-1 create 실행
-                resultCnt = boardDAO.create(boardVO);
+                // 2-1-1 Comment 게시물이 아닌 경우 createParent 실행
+                if(!boardVO.isComment()){
+                    resultCnt = boardDAO.createParent(boardVO);
+                }else {
 
+                    // 2-1-2 Comment 게시물인 경우 답글을 달려는 글을 가져온다.
+                    refVO = boardDAO.read(boardVO.getParentBno());
+
+                    // 2-1-3 해당 refVO가 없을 시 NoBoardException 발생
+                    if (refVO == null) throw new NoBoardException("WRT_ERR");
+
+                    // 2-1-3 있으면 boardVO에 step, depth 지정
+                    boardVO.setStep(refVO.getStep() + 1);
+                    boardVO.setDepth(refVO.getDepth() + 1);
+
+                    // 2-1-4 해당 ref 게시물 중 지정된 depth 보다 같거나 큰 depth가 있는 경우 1씩 증가
+                    boardDAO.updateDepth(boardVO);
+
+                    // 2-1-5 createChild 실행
+                    resultCnt = boardDAO.createChild(boardVO);
+                }
             // 2-2 아닌 경우
             }else {
                 // 2-2-1. 게시물이 존재하는지 확인 없으면 NoBoardException 발생

@@ -44,4 +44,13 @@ public class BoardServiceTest {
         service.proc(boardVO);
 
     }
+
+    @Test
+    public void createParentTest() throws Exception{
+        BoardVO vo = new BoardVO(1, 10);
+        vo.setTitle("title");
+        vo.setContent("content");
+        vo.setAction("WRT");
+        service.proc(vo);
+    }
 }

@@ -8,11 +8,15 @@ import com.boardPractice.domain.SearchCondition;
 import java.util.List;
 
 public interface BoardDAO {
-    int create(BoardVO boardVO) throws Exception;
+    int createParent(BoardVO boardVO) throws Exception;
+
+    int createChild(BoardVO boardVO) throws Exception;
 
     BoardVO read(Integer bno) throws Exception;
 
     int update(BoardVO boardVO) throws Exception;
+
+    int updateDepth(BoardVO boardVO) throws Exception;
 
     int delete(Integer bno) throws Exception;
 
