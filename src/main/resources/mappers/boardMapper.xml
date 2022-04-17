@@ -12,8 +12,8 @@
 
     <insert id="createChild">
         <![CDATA[
-        INSERT INTO TBL_BOARD(ref, step, depth, title, content, writer)
-        VALUES(#{ref}, #{step}, #{depth} , #{title}, #{content}, #{writer});
+        INSERT INTO TBL_BOARD(ref, step, depth, parent_bno, title, content, writer)
+        VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer});
         ]]>
     </insert>
 
@@ -38,10 +38,12 @@
         ]]>
     </update>
 
-    <delete id="delete">
-        DELETE FROM tbl_board
-        WHERE bno = #{bno}
-    </delete>
+    <update id="delete">
+        UPDATE TBL_BOARD SET blind_yn = 'Y'
+        WHERE 1=1
+        AND (bno = #{bno}
+        OR parent_bno = #{bno})
+    </update>
 
     <delete id="deleteAll">
         DELETE FROM tbl_board
@@ -54,48 +56,13 @@
 
     <select id="listAll" resultType="boardVO">
         <![CDATA[
-        SELECT bno, title, content, writer, regdate, viewcnt
+        SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn
         FROM tbl_board
-        ORDER BY bno DESC
+        WHERE 1=1
+        AND blind_yn = 'N'
+        ORDER BY ref DESC, depth ASC
         LIMIT #{offset}, #{pageSize}]]>
     </select>
 
-    <select id="conditionList" resultType="boardVO">
-        SELECT bno, title, content, writer, regdate, viewcnt
-        FROM tbl_board
-        WHERE 1=1
-        <choose>
-            <when test="option=='A'">
-                AND (title LIKE concat('%', #{keyword}, '%')
-                OR content LIKE concat('%', #{keyword}, '%'))
-            </when>
-            <when test="option=='T'">
-                AND title LiKE concat('%', #{keyword}, '%')
-            </when>
-            <otherwise>
-                AND content LIKE concat('%', #{keyword}, '%')
-            </otherwise>
-        </choose>
-        ORDER BY bno DESC
-            LIMIT #{offset}, #{pageSize}
-    </select>
-
-    <select id="conditionListCnt" resultType="int">
-        SELECT COUNT(*)
-        FROM tbl_board
-        WHERE 1=1
-        <choose>
-            <when test='option=="A"'>
-                AND (title LIKE concat('%', #{keyword}, '%')
-                OR content LIKE concat('%', #{keyword}, '%'))
-            </when>
-            <when test='option=="T"'>
-                AND title LIKE concat('%', #{keyword}, '%')
-            </when>
-            <otherwise>
-                AND content LIKE concat('%', #{keyword}, '%')
-            </otherwise>
-        </choose>
-    </select>
 
 </mapper>

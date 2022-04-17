@@ -48,9 +48,26 @@ public class BoardServiceTest {
     @Test
     public void createParentTest() throws Exception{
         BoardVO vo = new BoardVO(1, 10);
-        vo.setTitle("title");
-        vo.setContent("content");
+        vo.setTitle("3번째 게시물이요");
+        vo.setContent("3번째 게시물이요");
         vo.setAction("WRT");
         service.proc(vo);
+    }
+
+    @Test
+    public void createChildTest() throws Exception{
+        BoardVO vo = new BoardVO(1, 10);
+        vo.setTitle("1번 게시물 답글2의 답글 2의 답글 1이요");
+        vo.setContent("1번 게시물 답글2의 답글 2의 답글 1이요");
+        vo.setAction("WRT");
+        vo.setReply(true);
+        vo.setParentBno(8);
+        service.proc(vo);
+    }
+
+    @Test
+    public void deleteTest() throws Exception{
+        int result = dao.delete(3);
+        System.out.println(result);
     }
 }

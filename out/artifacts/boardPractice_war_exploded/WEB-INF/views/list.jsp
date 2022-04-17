@@ -46,21 +46,27 @@
                     <th scope="cols">제목</th>
                     <th scope="cols">작성자</th>
                     <th scope="cols">작성일</th>
-                    <th scope="cols">조회수</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${boardVOList}" var="list">
                     <tr>
                         <th scope="row">${list.bno}</th>
-                        <td class="table_title"><a href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>${list.title}</a></td>
+                        <td class="table_title">
+                            <a href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
+                                <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>
+                                    ${list.title}
+                            </a>
+                        </td>
                         <td>${list.writer}</td>
                         <td><fmt:formatDate pattern="yyyy.mm.dd hh:mm" value="${list.regdate}"/></td>
-                        <td>${list.viewcnt}</td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+            <c:if test="${boardVOList == null }">
+                <div>게시물이 없습니다.</div>
+            </c:if>
             <div class="page_wrap">
                 <div class="page_nation">
                     <c:if test="${boardVOList.get(0).pageMaker.prev}">

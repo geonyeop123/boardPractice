@@ -44,7 +44,7 @@ public class BoardDAOImpl implements BoardDAO {
 
     @Override
     public int delete(Integer bno) throws Exception{
-        return sqlSession.delete(namespace + "delete", bno);
+        return sqlSession.update(namespace + "delete", bno);
     }
 
     @Override
@@ -58,17 +58,8 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardVO> conditionList(PageMaker pm) throws Exception {
-        return sqlSession.selectList(namespace + "conditionList", pm);
-    }
-
-    @Override
     public int totalCnt() throws Exception{
         return sqlSession.selectOne(namespace + "totalCnt");
     }
 
-    @Override
-    public int conditionListCnt(SearchCondition sc) throws Exception {
-        return sqlSession.selectOne(namespace + "conditionListCnt", sc);
-    }
 }

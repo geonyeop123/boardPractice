@@ -32,10 +32,13 @@
             <div class="contentsContainer">
                 <ul>
                     <li style="display: none">
-                        <input type="text" name="bno" value="${boardVO.bno}"/>
+                        <input type="text" id="bno" name="bno" value="${boardVO.bno}"/>
                         <input type="text" name="page" value="${boardVO.page}"/>
                         <input type="text" name="pageSize" value="${boardVO.pageSize}"/>
                         <input type="text" id="actionInput" name="action" value="${boardVO.action}"/>
+                        <input type="checkbox" id="replyFlag" name="reply" ${boardVO.reply ? "checked" : ""}/>
+                        <input type="text" id="parentBno" name="parentBno" value="${boardVO.parentBno}"/>
+                        <input type="text" id="ref" name="ref" value="${boardVO.ref}"/>
                     </li>
                     <li>
                         <p>제목</p>
@@ -50,6 +53,7 @@
                         <button type="button" id="write">등록</button>
                         <c:if test='${boardVO.action=="MOD"}'>
                             <button type="button" id="delete">삭제</button>
+                            <button type="button" id="reply">답글</button>
                         </c:if>
                     </li>
                 </ul>
@@ -58,9 +62,6 @@
     </div>
     <script>
         $(document).ready(function(){
-            const msg = '${message}';
-            if(msg=="MOD_ERR") alert("수정 도중 에러가 발생하였습니다.");
-            if(msg=="MOD_OK") alert("성공적으로 수정되었습니다.");
 
             $("#write").on("click", function(){
                 const title = $("#title").val().trim();
@@ -87,6 +88,19 @@
                     form.attr('method', 'post');
                     form.submit();
                 }
+            })
+
+            $("#reply").on("click", function(){
+                let form = $("#form");
+                $("#replyFlag").attr("checked", true);
+                $("#parentBno").val(${boardVO.bno});
+                $("#title").val("");
+                $("#content").val("");
+                $("#bno").val("");
+                $("#actionInput").val("WRT");
+                form.attr('action', '<c:url value="/board/write"/>');
+                form.attr('method', 'get');
+                form.submit();
             })
         })
     </script>

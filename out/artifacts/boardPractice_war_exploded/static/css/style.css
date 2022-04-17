@@ -161,3 +161,7 @@ table.board_table td:last-child {
     width: 60px;
     height: 30px;
 }
+
+.reply_tag{
+    color:red;
+}

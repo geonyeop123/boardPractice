@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -52,7 +51,9 @@ public class BoardController {
         // #####
         // # 반환
         // #####
-       m.addAttribute(list);
+
+        // list가 null이 아니면 Model에 담아주기
+        if(list != null) m.addAttribute(list);
 
        return "list";
     }
@@ -63,7 +64,6 @@ public class BoardController {
         // #####
         // # 변수 선언
         // #####
-
         String message = null;
 
         // #####
@@ -91,7 +91,7 @@ public class BoardController {
     }
 
     @PostMapping("/proc")
-    public String proc(BoardVO boardVO, Model m, RedirectAttributes rttr){
+    public String proc(BoardVO boardVO, Model m){
         // #####
         // # 변수 선언
         // #####

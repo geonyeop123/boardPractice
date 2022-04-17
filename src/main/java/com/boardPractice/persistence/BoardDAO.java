@@ -24,9 +24,5 @@ public interface BoardDAO {
 
     List<BoardVO> listAll(BoardVO boardVO) throws Exception;
 
-    List<BoardVO> conditionList(PageMaker pm) throws Exception;
-
-    int conditionListCnt(SearchCondition sc) throws Exception;
-
     int totalCnt() throws Exception;
 }

@@ -16,20 +16,21 @@ public class BoardVO {
 
     // 3. 로직 처리를 위한 변수
     private String action;
-    private boolean comment;
-    private Integer parentBno;
+    private boolean reply;
+
 
     // 4. 게시물에 대한 변수
     private Integer bno;
     private Integer ref;
     private Integer step;
     private Integer depth;
+    private Integer parentBno;
     private String title;
     private String content;
     private String writer;
     private Date regdate;
     private String blindYn;
-
+    private String replyTag ="";
 
 
     public BoardVO(String title, String content, String writer){
@@ -68,6 +69,9 @@ public class BoardVO {
 
     public void setStep(Integer step) {
         this.step = step;
+        for(int i = 0; i < step;i++){
+            replyTag+="&nbsp;&nbsp;&nbsp;";
+        }
     }
 
     public Integer getDepth() {
@@ -77,7 +81,9 @@ public class BoardVO {
     public void setDepth(Integer depth) {
         this.depth = depth;
     }
-
+    public String getReplyTag(){
+        return replyTag;
+    }
 
     public String getTitle() {
         return title;
@@ -135,12 +141,12 @@ public class BoardVO {
         this.action = action;
     }
 
-    public boolean isComment() {
-        return comment;
+    public boolean isReply() {
+        return reply;
     }
 
-    public void setComment(boolean comment) {
-        this.comment = comment;
+    public void setReply(boolean reply) {
+        this.reply = reply;
     }
 
     public Integer getParentBno() {
@@ -201,17 +207,18 @@ public class BoardVO {
                 ", page=" + page +
                 ", pageSize=" + pageSize +
                 ", action='" + action + '\'' +
-                ", comment=" + comment +
-                ", parentBno=" + parentBno +
+                ", reply=" + reply +
                 ", bno=" + bno +
                 ", ref=" + ref +
                 ", step=" + step +
                 ", depth=" + depth +
+                ", parentBno=" + parentBno +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", writer='" + writer + '\'' +
                 ", regdate=" + regdate +
                 ", blindYn='" + blindYn + '\'' +
+                ", reply_tag=" + replyTag +
                 '}';
     }
 }
