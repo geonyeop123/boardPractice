@@ -64,7 +64,7 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <c:if test="${boardVOList == null }">
+            <c:if test="${boardVOList == null}">
                 <div>게시물이 없습니다.</div>
             </c:if>
             <div class="page_wrap">

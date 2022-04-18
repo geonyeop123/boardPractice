@@ -50,7 +50,7 @@
         WHERE 1=1
     </delete>
     <select id="totalCnt" resultType="int">
-        SELECT COUNT(*)
+        SELECT COUNT(bno)
         FROM tbl_board
     </select>
 

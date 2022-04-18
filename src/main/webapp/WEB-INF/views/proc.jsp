@@ -36,29 +36,31 @@
     </form>
     <script>
         $(document).ready(function(){
+            // 리팩토링 해보세요
             const msg = '${message}';
+
+            if(msg=="WRT_ERR") alert("등록 도중 에러가 발생하였습니다.");
+
+            if(msg=="MOD_ERR") alert("수정 도중 에러가 발생하였습니다.");
+
+            if(msg=="DEL_ERR") alert("삭제 도중 에러가 발생하였습니다.");
+
+
+            if(msg=="ERR_NOBOARD"){
+                alert("존재하지 않는 게시물입니다.");
+                location.href='<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
+                return;
+            }
 
             if(msg=="WRT_OK"){
                 alert("성공적으로 등록되었습니다.");
                 location.href="<c:url value='/board/list'/>";
                 return;
             }
-            if(msg=="WRT_ERR") alert("등록 도중 에러가 발생하였습니다.");
-
             if(msg=="MOD_OK") alert("성공적으로 수정되었습니다.");
-
-            if(msg=="MOD_ERR") alert("수정 도중 에러가 발생하였습니다.");
 
             if(msg=="DEL_OK"){
                 alert("성공적으로 삭제되었습니다.");
-                location.href='<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
-                return;
-            }
-
-            if(msg=="DEL_ERR") alert("삭제 도중 에러가 발생하였습니다.");
-
-            if(msg=="ERR_NOBOARD"){
-                alert("존재하지 않는 게시물입니다.");
                 location.href='<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
                 return;
             }

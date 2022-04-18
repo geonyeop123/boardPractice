@@ -26,8 +26,9 @@
     </div>
     <div class="mainContainer">
         <div class="titleContainer">
-            <h1 class="title bold">${boardVO.action=="MOD" ? "글 수정" : (boardVO.action=="WRT" ? "글 작성" : "게시물")}</h1>
+            <h1 class="title bold">${boardVO.action=="MOD" ? "글 수정" : "글 작성"}</h1>
         </div>
+
         <form id="form">
             <div class="contentsContainer">
                 <ul>
@@ -63,14 +64,16 @@
     <script>
         $(document).ready(function(){
 
+
+
             $("#write").on("click", function(){
+                let form = $("#form");
                 const title = $("#title").val().trim();
                 const content = $("#content").val().trim();
                 if(title == "" || content == "") {
                     alert("제목 혹은 본문 내용은 필수입니다.");
                     return;
                 }
-                let form = $("#form");
                 form.attr('action', '<c:url value="/board/proc"/>');
                 form.attr('method', 'post');
                 form.submit();

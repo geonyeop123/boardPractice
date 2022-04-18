@@ -17,6 +17,7 @@ public class BoardServiceImpl implements BoardService {
     BoardDAO boardDAO;
 
     @Override
+//    public BoardVO list(BoardVO boardVO) throws Exception {
     public List<BoardVO> list(BoardVO boardVO) throws Exception {
 
         // #####
@@ -40,6 +41,7 @@ public class BoardServiceImpl implements BoardService {
         pm = new PageMaker(boardVO.getPage(), boardVO.getPageSize(), totalCnt);
 
         // 2. 게시판에 보여줄 List 얻어오기
+//        boardVO.setList(list);
         list = boardDAO.listAll(boardVO);
 
         // 3. 페이징 처리를 위해 첫번째 boardVO에 pageMaker 값 담기
@@ -60,6 +62,7 @@ public class BoardServiceImpl implements BoardService {
         // #####
         // # 처리 로직
         // #####
+
         // 1. MOD일 시 title과 content를 표시해주기
         if("MOD".equals(boardVO.getAction())){
 
@@ -73,7 +76,9 @@ public class BoardServiceImpl implements BoardService {
             boardVO.setContent(vo.getContent());
             boardVO.setRef(vo.getRef());
 
+            // VO안에 dto에 넣기
         }
+        // WRT action은 필요 없음
 
         return boardVO;
     }
@@ -85,7 +90,7 @@ public class BoardServiceImpl implements BoardService {
         // #####
         // # 변수 선언
         // #####
-        System.out.println(boardVO);
+
         // 메시지의 형태는 action_OK action_ERR 이므로, 미리 action 값으로 초기화
         String message = boardVO.getAction();
         BoardVO refVO = null;
@@ -142,7 +147,7 @@ public class BoardServiceImpl implements BoardService {
                 System.out.println(resultCnt);
             }
 
-        message = resultCnt != 0 ? message + "_OK" : message + "_ERR";
+        message = (resultCnt > 0) ? message + "_OK" : message + "_ERR";
 
         return message;
     }

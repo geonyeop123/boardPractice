@@ -10,6 +10,8 @@ public class BoardVO {
     // 1. 페이징 처리를 위한 변수
     private PageMaker pageMaker;
 
+//    List<BoardDTO> boardDTOList;
+
     // 2. 페이지에 대한 변수
     private Integer page;
     private Integer pageSize;

@@ -40,6 +40,7 @@ public class BoardController {
         if(boardVO.getPage() == null || boardVO.getPageSize() == null){
             boardVO = new BoardVO(1, 10);
         }
+        // new 하지 말고 set으로 하는게 더 좋음
 
        try{
 
@@ -48,12 +49,18 @@ public class BoardController {
 
        }catch(Exception e){ e.printStackTrace(); }
 
+       // throw 던지기
+
+
         // #####
         // # 반환
         // #####
 
         // list가 null이 아니면 Model에 담아주기
         if(list != null) m.addAttribute(list);
+        // name 지정하면 model null 에러가 발생하지 않을 것임
+
+
 
        return "list";
     }
@@ -72,6 +79,7 @@ public class BoardController {
         try{
             // 1. action에 따른 boardVO 값 가져오기
             boardVO = service.write(boardVO);
+
         }catch(NoBoardException ne){
             // 2. 게시물이 없다면 메시지에 해당 코드를 담는다.
             message = "ERR_NOBOARD";
@@ -101,9 +109,9 @@ public class BoardController {
         // # 처리 로직
         // #####
         try{
+
             // 1. action에 따른 message 가져오기
             message = service.proc(boardVO);
-            System.out.println(message);
 
         }catch(NoBoardException ne){
             // 2. 게시물이 없다면 에러코드 변경
