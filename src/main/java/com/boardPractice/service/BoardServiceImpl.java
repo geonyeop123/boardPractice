@@ -84,7 +84,7 @@ public class BoardServiceImpl implements BoardService {
         // #####
         // # 처리 로직
         // #####
-        System.out.println(boardVO);
+
         // 1. 로그인 작업이 없기 때문에 writer 하드코딩
         boardVO.getBoardDTO().setWriter("yeop");
 

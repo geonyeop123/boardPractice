@@ -25,10 +25,6 @@ public class BoardController {
     public String list(BoardVO boardVO, Model m)throws Exception{
 
         // #####
-        // # 변수 선언
-        // #####
-
-        // #####
         // # 처리 로직
         // #####
 
@@ -86,7 +82,6 @@ public class BoardController {
         // #####
         // # 반환
         // #####
-        System.out.println(boardVO);
         m.addAttribute(boardVO);
 
         return "proc";

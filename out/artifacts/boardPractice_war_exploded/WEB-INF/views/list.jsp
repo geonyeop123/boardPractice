@@ -52,7 +52,7 @@
                             </a>
                         </td>
                         <td>${list.writer}</td>
-                        <td><fmt:formatDate pattern="yyyy.mm.dd hh:mm" value="${list.regdate}"/></td>
+                        <td><fmt:formatDate pattern="yyyy.MM.dd hh:mm" value="${list.regdate}"/></td>
                     </tr>
                 </c:forEach>
                 </tbody>
