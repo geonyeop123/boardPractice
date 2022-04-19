@@ -144,7 +144,7 @@ public class BoardServiceImpl implements BoardService {
                     }
                 }
             }
-        // 메시지 담기
+        // 일반 에러 결과에 대한 메시지 담기
         if(!diffent_err){
             if(resultCnt > 0) message.append("SUC_" + boardVO.getAction());
                 else
