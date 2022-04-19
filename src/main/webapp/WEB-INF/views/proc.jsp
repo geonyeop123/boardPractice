@@ -25,11 +25,11 @@
                 </li>
                 <li>
                     <p>제목</p>
-                    <input type="text" id="title" name="title" value="${boardVO.title}" />
+                    <input type="text" id="title" name="title" value="${boardVO.boardDTO.title}" />
                 </li>
                 <li>
                     <p>내용</p>
-                    <textarea id="content" name="content" >${boardVO.content}</textarea>
+                    <textarea id="content" name="content" >${boardVO.boardDTO.content}</textarea>
                 </li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
     <script>
         $(document).ready(function(){
             // 리팩토링 해보세요
-            const msg = '${message}';
+            const msg = '${boardVO.msg}';
 
             if(msg=="WRT_ERR") alert("등록 도중 에러가 발생하였습니다.");
 

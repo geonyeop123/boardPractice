@@ -1,8 +1,7 @@
 package com.boardPractice.persistence;
 
+import com.boardPractice.domain.BoardDTO;
 import com.boardPractice.domain.BoardVO;
-import com.boardPractice.domain.PageMaker;
-import com.boardPractice.domain.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,18 +27,23 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public BoardVO read(Integer bno) throws Exception{
+    public int create(BoardVO boardVO) throws Exception {
+        return sqlSession.insert(namespace + "createChild", boardVO);
+    }
+
+    @Override
+    public BoardDTO read(Integer bno) throws Exception{
         return sqlSession.selectOne(namespace + "select", bno);
     }
 
     @Override
-    public int update(BoardVO boardVO) throws Exception{
-        return sqlSession.update(namespace + "update", boardVO);
+    public int update(BoardDTO boardDTO) throws Exception{
+        return sqlSession.update(namespace + "update", boardDTO);
     }
 
     @Override
-    public int updateDepth(BoardVO boardVO) throws Exception {
-        return sqlSession.update(namespace + "updateDepth", boardVO);
+    public int updateDepth(BoardDTO boardDTO) throws Exception {
+        return sqlSession.update(namespace + "updateDepth", boardDTO);
     }
 
     @Override
@@ -53,7 +57,7 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public List<BoardVO> listAll(BoardVO boardVO) throws Exception{
+    public List<BoardDTO> listAll(BoardVO boardVO) throws Exception{
         return sqlSession.selectList(namespace + "listAll", boardVO);
     }
 

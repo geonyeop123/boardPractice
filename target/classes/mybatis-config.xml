@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias alias="boardVO" type="com.boardPractice.domain.BoardVO"/>
+        <typeAlias alias="boardDTO" type="com.boardPractice.domain.BoardDTO"/>
     </typeAliases>
 </configuration>

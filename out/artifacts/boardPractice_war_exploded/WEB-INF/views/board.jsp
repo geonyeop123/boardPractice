@@ -26,8 +26,9 @@
     </div>
     <div class="mainContainer">
         <div class="titleContainer">
-            <h1 class="title bold">${boardVO.action=="MOD" ? "글 수정" : (boardVO.action=="WRT" ? "글 작성" : "게시물")}</h1>
+            <h1 class="title bold">${boardVO.action=="MOD" ? "글 수정" : "글 작성"}</h1>
         </div>
+
         <form id="form">
             <div class="contentsContainer">
                 <ul>
@@ -36,17 +37,15 @@
                         <input type="text" name="page" value="${boardVO.page}"/>
                         <input type="text" name="pageSize" value="${boardVO.pageSize}"/>
                         <input type="text" id="actionInput" name="action" value="${boardVO.action}"/>
-                        <input type="checkbox" id="replyFlag" name="reply" ${boardVO.reply ? "checked" : ""}/>
                         <input type="text" id="parentBno" name="parentBno" value="${boardVO.parentBno}"/>
-                        <input type="text" id="ref" name="ref" value="${boardVO.ref}"/>
                     </li>
                     <li>
                         <p>제목</p>
-                        <input type="text" id="title" name="title" value="${boardVO.title}" />
+                        <input type="text" id="title" name="title" value="${boardVO.boardDTO.title}" />
                     </li>
                     <li>
                         <p>내용</p>
-                        <textarea id="content" name="content" >${boardVO.content}</textarea>
+                        <textarea id="content" name="content" >${boardVO.boardDTO.content}</textarea>
                     </li>
                     <li class="buttonContainer">
                         <button type="button" id="list">목록</button>
@@ -63,14 +62,16 @@
     <script>
         $(document).ready(function(){
 
+
+
             $("#write").on("click", function(){
+                let form = $("#form");
                 const title = $("#title").val().trim();
                 const content = $("#content").val().trim();
                 if(title == "" || content == "") {
                     alert("제목 혹은 본문 내용은 필수입니다.");
                     return;
                 }
-                let form = $("#form");
                 form.attr('action', '<c:url value="/board/proc"/>');
                 form.attr('method', 'post');
                 form.submit();
@@ -97,7 +98,7 @@
                 $("#title").val("");
                 $("#content").val("");
                 $("#bno").val("");
-                $("#actionInput").val("WRT");
+                $("#actionInput").val("REP");
                 form.attr('action', '<c:url value="/board/write"/>');
                 form.attr('method', 'get');
                 form.submit();

@@ -6,19 +6,31 @@
     <insert id="createParent">
         <![CDATA[
         INSERT INTO TBL_BOARD(ref, title, content, writer)
-        VALUES((SELECT IFNULL(MAX(bno), 0)+1 FROM TBL_BOARD B) , #{title}, #{content}, #{writer});
+        VALUES((SELECT IFNULL(MAX(ref), 0)+1 FROM TBL_BOARD B) , #{title}, #{content}, #{writer})
         ]]>
     </insert>
 
     <insert id="createChild">
         <![CDATA[
         INSERT INTO TBL_BOARD(ref, step, depth, parent_bno, title, content, writer)
-        VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer});
+        VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer})
         ]]>
     </insert>
 
-    <select id="select" resultType="boardVO">
-        SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn
+    <insert id="create">
+        INSERT INTO TBL_BOARD(ref, step, depth, parent_bno, title, content, writer)
+        <choose>
+            <when test="action == 'WRT'">
+                VALUES((SELECT IFNULL(MAX(ref), 0)+1 FROM TBL_BOARD B) , #{title}, #{content}, #{writer})
+            </when>
+            <otherwise>
+                VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer})
+            </otherwise>
+        </choose>
+    </insert>
+
+    <select id="select" resultType="boardDTO">
+        SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn AS 'blindYn'
         FROM tbl_board
         where bno = #{bno}
     </select>
@@ -41,8 +53,7 @@
     <update id="delete">
         UPDATE TBL_BOARD SET blind_yn = 'Y'
         WHERE 1=1
-        AND (bno = #{bno}
-        OR parent_bno = #{bno})
+        AND bno = #{bno}
     </update>
 
     <delete id="deleteAll">
@@ -50,13 +61,13 @@
         WHERE 1=1
     </delete>
     <select id="totalCnt" resultType="int">
-        SELECT COUNT(*)
+        SELECT COUNT(bno)
         FROM tbl_board
     </select>
 
-    <select id="listAll" resultType="boardVO">
+    <select id="listAll" resultType="boardDTO">
         <![CDATA[
-        SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn
+        SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn AS 'blindYn'
         FROM tbl_board
         WHERE 1=1
         AND blind_yn = 'N'

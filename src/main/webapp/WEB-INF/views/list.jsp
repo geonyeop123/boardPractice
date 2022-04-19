@@ -27,13 +27,6 @@
     <div class="mainContainer">
         <div class="titleContainer">
             <h1 class="title">게시판</h1>
-<%--            <div class="searchContainer">--%>
-<%--                <select>--%>
-<%--                    <option value="A">제목 + 내용</option>--%>
-<%--                    <option value="T">제목</option>--%>
-<%--                    <option value="C">내용</option>--%>
-<%--                </select>--%>
-<%--            </div>--%>
             <div class="buttonContainer">
                 <button id="write_btn" type="button">글쓰기</button>
             </div>
@@ -49,11 +42,11 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${boardVOList}" var="list">
+                <c:forEach items="${boardVO.list}" var="list">
                     <tr>
                         <th scope="row">${list.bno}</th>
                         <td class="table_title">
-                            <a href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
+                            <a href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
                                 <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>
                                     ${list.title}
                             </a>
@@ -64,19 +57,19 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <c:if test="${boardVOList == null}">
+            <c:if test="${boardVO.list == null}">
                 <div>게시물이 없습니다.</div>
             </c:if>
             <div class="page_wrap">
                 <div class="page_nation">
-                    <c:if test="${boardVOList.get(0).pageMaker.prev}">
-                        <a class="arrow prev" href="/board/list?page=${boardVOList.get(0).pageMaker.startPage - 1}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">&lt;</a>
+                    <c:if test="${boardVO.pageMaker.prev}">
+                        <a class="arrow prev" href="/board/list?page=${boardVO.pageMaker.startPage - 1}&pageSize=${boardVO.pageMaker.pageSize}">&lt;</a>
                     </c:if>
-                        <c:forEach var="i" begin="${boardVOList.get(0).pageMaker.startPage}" end="${boardVOList.get(0).pageMaker.endPage}">
-                            <a class="${boardVOList.get(0).pageMaker.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">${i}</a>
+                        <c:forEach var="i" begin="${boardVO.pageMaker.startPage}" end="${boardVO.pageMaker.endPage}">
+                            <a class="${boardVO.pageMaker.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${boardVO.pageMaker.pageSize}">${i}</a>
                         </c:forEach>
-                    <c:if test="${boardVOList.get(0).pageMaker.next}">
-                        <a class="arrow next" href="/board/list?page=${boardVOList.get(0).pageMaker.endPage + 1}&pageSize=${boardVOList.get(0).pageMaker.pageSize}">&gt;</a>
+                    <c:if test="${boardVO.pageMaker.next}">
+                        <a class="arrow next" href="/board/list?page=${boardVO.pageMaker.endPage + 1}&pageSize=${boardVO.pageMaker.pageSize}">&gt;</a>
                     </c:if>
                 </div>
             </div>
@@ -86,7 +79,7 @@
         $(document).ready(function(){
 
             $("#write_btn").on("click",function(){
-                location.href='<c:url value="/board/write?page=${boardVOList.get(0).pageMaker.page}&pageSize=${boardVOList.get(0).pageMaker.pageSize}&action=WRT"/>';
+                location.href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&action=WRT"/>';
             })
         })
     </script>
