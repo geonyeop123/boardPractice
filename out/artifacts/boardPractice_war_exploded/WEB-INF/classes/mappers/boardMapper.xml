@@ -87,6 +87,7 @@
     <select id="totalCnt" resultType="int">
         SELECT COUNT(bno)
         FROM tbl_board
+        WHERE blind_yn = 'N'
     </select>
 
     <select id="listAll" resultType="boardDTO">
