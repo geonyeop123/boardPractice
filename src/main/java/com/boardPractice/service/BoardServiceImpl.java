@@ -72,15 +72,19 @@ public class BoardServiceImpl implements BoardService {
         // # 변수 선언
         // #####
 
-        // 메시지의 형태는 action_OK action_ERR 이므로, 미리 action 값으로 초기화
-        String message = boardVO.getAction();
-        BoardVO refVO = null;
+        // 메시지를 담기 위한 변수
+        StringBuffer message = new StringBuffer();
+        // 현재 게시물 정보를 담기 위한 변수
+        BoardDTO currentDTO = null;
+        // 기본 err와 다른 에러일 시 표시하기 위한 변수
+        boolean diffent_err = false;
+        // DB result row를 담기 위한 변수
         int resultCnt = 0;
 
         // #####
         // # 처리 로직
         // #####
-
+        System.out.println(boardVO);
         // 1. 로그인 작업이 없기 때문에 writer 하드코딩
         boardVO.getBoardDTO().setWriter("yeop");
 
@@ -89,12 +93,16 @@ public class BoardServiceImpl implements BoardService {
             if ("WRT".equals(boardVO.getAction())) {
                 // create 실행
                 resultCnt = boardDAO.create(boardVO);
-
             // 2-2 아닌 경우
             } else {
-                // 2-2-1. 게시물이 존재하는지 확인 없으면 msg에 담기
-                if (boardDAO.read(boardVO.getBno()) == null) {
-                    message = "ERR_NoBoard";
+                // 2-2-1. 현재 게시물을 currentDTO에 담기
+                currentDTO = boardDAO.read(boardVO.getBno());
+
+                // 2-2-2. 만일, 현재 게시물이 없다면, error 메시지 담기
+                if (currentDTO == null) {
+                    message.append("ERR_NoBoard");
+                    diffent_err = true;
+
                 }else{
                     // 2-3 MOD(수정)인 경우
                     if ("MOD".equals(boardVO.getAction())) {
@@ -105,18 +113,46 @@ public class BoardServiceImpl implements BoardService {
                         // 2-4 DEL(삭제)인 경우
                     } else if ("DEL".equals(boardVO.getAction())) {
 
-                        // 2-4-1. 존재하는 경우 delete 실행 이때, 답글도 모두 삭제된다.
-                        resultCnt = boardDAO.delete(boardVO.getBno());
-                        System.out.println(resultCnt);
+                        // 2-4-1. 삭제할 수 있는지 확인(답글이 있는지 확인)
+                        resultCnt = boardDAO.deleteCheck(currentDTO);
+
+                        // 2-4-2. 답글이 있다면 error 메시지 담기
+                        if(resultCnt > 0){
+                            message.append("ERR_HaveRep");
+                            diffent_err = true;
+                        // 2-4-3. 없다면 삭제 진행
+                        }else{
+
+                            // 2-4-4. 게시물 삭제
+                            resultCnt = boardDAO.delete(boardVO.getBno());
+                            // 2-4-5. 현재 게시물보다 높은 depth를 가진 게시물들의 depth를 -1씩 해주기
+                            resultCnt = boardDAO.deleteUpdateDepth(currentDTO);
+                        }
+                    // 2-5-1. REP(답글)인 경우
                     } else if ("REP".equals(boardVO.getAction())){
+
+                        // 2-5-2. 현재 게시물의 ref정보를 입력
+                        boardVO.setRef(currentDTO.getRef());
+                        // 2-5-3. 현재 게시물의 step에서 1을 증가한 값을 입력
+                        boardVO.setStep(currentDTO.getStep() + 1);
+                        // 2-5-4. 현재 게시물의 depth에서 1을 증가한 값을 입력
+                        boardVO.setDepth(currentDTO.getDepth() + 1);
+                        // 2-5-5. 답글로 등록될 depth보다 높거나 같은 게시물의 depth를 1씩 증가
+                        boardDAO.createUpdateDepth(boardVO.getBoardDTO());
+                        // 2-6-5. 답글 등록
                         resultCnt = boardDAO.create(boardVO);
                     }
-                    message = (resultCnt > 0) ? message + "_OK" : message + "_ERR";
                 }
             }
+        // 메시지 담기
+        if(!diffent_err){
+            if(resultCnt > 0) message.append("SUC_" + boardVO.getAction());
+                else
+                    message.append("ERR_" + boardVO.getAction());
+        }
 
-        boardVO.setMsg(message);
-        System.out.println(boardVO.getMsg());
+        boardVO.setMsg(message.toString());
+
         return boardVO;
     }
 }

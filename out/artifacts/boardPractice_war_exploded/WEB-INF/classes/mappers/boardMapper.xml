@@ -12,19 +12,19 @@
 
     <insert id="createChild">
         <![CDATA[
-        INSERT INTO TBL_BOARD(ref, step, depth, parent_bno, title, content, writer)
-        VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer})
+        INSERT INTO TBL_BOARD(ref, step, depth, title, content, writer)
+        VALUES(#{ref}, #{step}, #{depth}, #{title}, #{content}, #{writer})
         ]]>
     </insert>
 
     <insert id="create">
-        INSERT INTO TBL_BOARD(ref, step, depth, parent_bno, title, content, writer)
+        INSERT INTO TBL_BOARD(ref, step, depth, title, content, writer)
         <choose>
-            <when test="action == 'WRT'">
-                VALUES((SELECT IFNULL(MAX(ref), 0)+1 FROM TBL_BOARD B) , #{title}, #{content}, #{writer})
+            <when test='action == "WRT"'>
+                VALUES((SELECT IFNULL(MAX(ref), 0)+1 FROM TBL_BOARD B) ,0, 0, #{title}, #{content}, #{writer})
             </when>
             <otherwise>
-                VALUES(#{ref}, #{step}, #{depth}, #{parentBno}, #{title}, #{content}, #{writer})
+                VALUES(#{ref}, #{step}, #{depth}, #{title}, #{content}, #{writer})
             </otherwise>
         </choose>
     </insert>
@@ -42,13 +42,37 @@
         AND writer = #{writer}
     </update>
 
-    <update id="updateDepth">
+    <select id="deleteCheck" resultType="int">
+        <![CDATA[
+        SELECT count(*)
+        FROM tbl_board
+        WHERE 1=1
+        AND ref = #{ref}
+        AND step > #{step}
+        AND depth = #{depth}+1
+        AND blind_yn = 'N'
+        ORDER BY ref DESC, depth ASC
+        ]]>
+    </select>
+
+    <update id="createUpdateDepth">
         <![CDATA[
         UPDATE TBL_BOARD SET depth = depth + 1
         WHERE ref = #{ref}
-        AND depth >= #{depth};
+        AND depth >= #{depth}
+        AND blind_yn = 'N'
         ]]>
     </update>
+
+    <update id="deleteUpdateDepth">
+        <![CDATA[
+        UPDATE TBL_BOARD SET depth = depth - 1
+        WHERE ref = #{ref}
+        AND depth > #{depth}
+        AND blind_yn = 'N';
+        ]]>
+    </update>
+
 
     <update id="delete">
         UPDATE TBL_BOARD SET blind_yn = 'Y'
@@ -74,6 +98,4 @@
         ORDER BY ref DESC, depth ASC
         LIMIT #{offset}, #{pageSize}]]>
     </select>
-
-
 </mapper>

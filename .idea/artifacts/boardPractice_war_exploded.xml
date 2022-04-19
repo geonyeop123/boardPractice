@@ -35,6 +35,10 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.3.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.3.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.3.19" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.3.19" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.3.19" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.19" />
         </element>
       </element>
     </root>

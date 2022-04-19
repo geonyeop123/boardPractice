@@ -21,9 +21,7 @@ public class BoardVO {
 
     // 4. 로직 처리를 위한 변수
     private String action;
-
     private Integer parentBno;
-
     private StringBuffer msg;
 
 
@@ -51,9 +49,25 @@ public class BoardVO {
         this.boardDTO = boardDTO;
     }
 
-    public void setMsg(StringBuffer msg) {
-        this.msg = msg;
+    public Integer getBno() {
+        return boardDTO.getBno();
     }
+
+    public void setBno(Integer bno) {
+        this.boardDTO.setBno(bno);
+    }
+
+    public Integer getRef() { return boardDTO.getRef(); }
+
+    public void setRef(Integer ref) { boardDTO.setRef(ref); }
+
+    public Integer getStep() { return boardDTO.getStep(); }
+
+    public void setStep(Integer step) { boardDTO.setStep(step); }
+
+    public Integer getDepth() { return boardDTO.getDepth(); }
+
+    public void setDepth(Integer depth) { boardDTO.setDepth(depth); }
 
     public String getTitle(){
         return this.boardDTO.getTitle();
@@ -70,6 +84,15 @@ public class BoardVO {
     public void setContent(String content){
         this.boardDTO.setContent(content);
     }
+
+    public String getWriter(){
+        return this.boardDTO.getWriter();
+    }
+
+    public void setWriter(String writer){
+        this.boardDTO.setWriter(writer);
+    }
+
     public PageMaker getPageMaker() {
         return pageMaker;
     }
@@ -108,14 +131,6 @@ public class BoardVO {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
-    }
-
-    public Integer getBno() {
-        return boardDTO.getBno();
-    }
-
-    public void setBno(Integer bno) {
-        this.boardDTO.setBno(bno);
     }
 
     public String getMsg() {

@@ -76,7 +76,7 @@ public class BoardServiceTest {
     }
     @Test
     public void deleteTest() throws Exception{
-        int result = dao.delete(3);
+        int result = dao.delete(2);
         System.out.println(result);
     }
 
@@ -85,5 +85,38 @@ public class BoardServiceTest {
         BoardVO vo = new BoardVO(1, 10);
         vo.setTitle("hi");
 //        vo.
+    }
+
+    @Test
+    public void createTest() throws Exception{
+        BoardVO vo = new BoardVO(1, 10);
+        BoardDTO dto = new BoardDTO("title", "content", "yeop");
+        vo.setBoardDTO(dto);
+        vo.setAction("WRT");
+        System.out.println(vo);
+
+        service.proc(vo);
+    }
+
+    @Test
+    public void createTest2() throws Exception{
+        BoardVO vo = new BoardVO(1, 10);
+        BoardDTO dto = new BoardDTO("title", "content", "yeop");
+        vo.setBoardDTO(dto);
+        vo.setAction("REP");
+        vo.setBno(2);
+        System.out.println(vo);
+        service.proc(vo);
+    }
+
+    @Test
+    public void deleteTest1() throws Exception{
+        BoardVO vo = new BoardVO(1, 10);
+        BoardDTO dto = new BoardDTO("hi","d","yeop");
+        vo.setBoardDTO(dto);
+        System.out.println("vo = " + vo);
+        vo.setBno(2);
+        vo.setAction("DEL");
+        service.proc(vo);
     }
 }

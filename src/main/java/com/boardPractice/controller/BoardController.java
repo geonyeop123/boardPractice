@@ -86,6 +86,7 @@ public class BoardController {
         // #####
         // # 반환
         // #####
+        System.out.println(boardVO);
         m.addAttribute(boardVO);
 
         return "proc";

@@ -17,18 +17,8 @@ public class BoardDAOImpl implements BoardDAO {
     private static final String namespace = "com.boardPractice.mapper.BoardMapper.";
 
     @Override
-    public int createParent(BoardVO boardVO) throws Exception{
-        return sqlSession.insert(namespace + "createParent", boardVO);
-    }
-
-    @Override
-    public int createChild(BoardVO boardVO) throws Exception{
-        return sqlSession.insert(namespace + "createChild", boardVO);
-    }
-
-    @Override
     public int create(BoardVO boardVO) throws Exception {
-        return sqlSession.insert(namespace + "createChild", boardVO);
+        return sqlSession.insert(namespace + "create", boardVO);
     }
 
     @Override
@@ -42,8 +32,19 @@ public class BoardDAOImpl implements BoardDAO {
     }
 
     @Override
-    public int updateDepth(BoardDTO boardDTO) throws Exception {
-        return sqlSession.update(namespace + "updateDepth", boardDTO);
+    public int createUpdateDepth(BoardDTO boardDTO) throws Exception {
+        return sqlSession.update(namespace + "createUpdateDepth", boardDTO);
+    }
+
+    @Override
+    public int deleteUpdateDepth(BoardDTO boardDTO) throws Exception {
+        return sqlSession.update(namespace + "deleteUpdateDepth", boardDTO);
+    }
+
+
+    @Override
+    public int deleteCheck(BoardDTO boardDTO) throws Exception {
+        return sqlSession.selectOne(namespace + "deleteCheck", boardDTO);
     }
 
     @Override

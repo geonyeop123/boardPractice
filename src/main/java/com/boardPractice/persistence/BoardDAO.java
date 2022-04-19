@@ -7,10 +7,8 @@ import com.boardPractice.domain.BoardVO;
 import java.util.List;
 
 public interface BoardDAO {
-    int createParent(BoardVO boardVO) throws Exception;
 
-    int createChild(BoardVO boardVO) throws Exception;
-
+    int deleteCheck(BoardDTO boarDTO) throws Exception;
 
     int create(BoardVO boardVO) throws Exception;
 
@@ -18,7 +16,9 @@ public interface BoardDAO {
 
     int update(BoardDTO boardDTO) throws Exception;
 
-    int updateDepth(BoardDTO boardDTO) throws Exception;
+    int createUpdateDepth(BoardDTO boardDTO) throws Exception;
+
+    int deleteUpdateDepth(BoardDTO boardDTO) throws Exception;
 
     int delete(Integer bno) throws Exception;
 

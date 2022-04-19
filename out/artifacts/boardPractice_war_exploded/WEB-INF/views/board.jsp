@@ -30,15 +30,13 @@
         </div>
 
         <form id="form">
+            <input type="hidden" id="bno" name="bno" value="${boardVO.bno}"/>
+            <input type="hidden" name="page" value="${boardVO.page}"/>
+            <input type="hidden" name="pageSize" value="${boardVO.pageSize}"/>
+            <input type="hidden" id="actionInput" name="action" value="${boardVO.action}"/>
+            <input type="hidden" id="parentBno" name="parentBno" value="${boardVO.parentBno}"/>
             <div class="contentsContainer">
                 <ul>
-                    <li style="display: none">
-                        <input type="text" id="bno" name="bno" value="${boardVO.bno}"/>
-                        <input type="text" name="page" value="${boardVO.page}"/>
-                        <input type="text" name="pageSize" value="${boardVO.pageSize}"/>
-                        <input type="text" id="actionInput" name="action" value="${boardVO.action}"/>
-                        <input type="text" id="parentBno" name="parentBno" value="${boardVO.parentBno}"/>
-                    </li>
                     <li>
                         <p>제목</p>
                         <input type="text" id="title" name="title" value="${boardVO.boardDTO.title}" />
@@ -94,10 +92,8 @@
             $("#reply").on("click", function(){
                 let form = $("#form");
                 $("#replyFlag").attr("checked", true);
-                $("#parentBno").val(${boardVO.bno});
                 $("#title").val("");
                 $("#content").val("");
-                $("#bno").val("");
                 $("#actionInput").val("REP");
                 form.attr('action', '<c:url value="/board/write"/>');
                 form.attr('method', 'get');

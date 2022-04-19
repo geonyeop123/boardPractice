@@ -16,57 +16,91 @@
 <body>
     <form id="form" style="display: none">
         <div class="contentsContainer">
-            <ul>
-                <li style="display: none">
-                    <input type="text" name="bno" value="${boardVO.bno}"/>
-                    <input type="text" name="page" value="${boardVO.page}"/>
-                    <input type="text" name="pageSize" value="${boardVO.pageSize}"/>
-                    <input type="text" id="actionInput" name="action" value="${boardVO.action == "DEL" ? "MOD" : boardVO.action}"/>
-                </li>
-                <li>
-                    <p>제목</p>
-                    <input type="text" id="title" name="title" value="${boardVO.boardDTO.title}" />
-                </li>
-                <li>
-                    <p>내용</p>
-                    <textarea id="content" name="content" >${boardVO.boardDTO.content}</textarea>
-                </li>
-            </ul>
+            <input type="hidden" name="bno" value="${boardVO.bno}"/>
+            <input type="hidden" name="page" value="${boardVO.page}"/>
+            <input type="hidden" name="pageSize" value="${boardVO.pageSize}"/>
+            <input type="hidden" id="actionInput" name="action" value="${boardVO.action == "DEL" ? "MOD" : boardVO.action}"/>
+            <input type="hidden" id="title" name="title" value="${boardVO.boardDTO.title}" />
+            <input type="hidden" id="content" name="content" value="${boardVO.boardDTO.content}" />
         </div>
     </form>
     <script>
         $(document).ready(function(){
-            // 리팩토링 해보세요
+
+            // #####
+            // # 변수 선언
+            // #####
+
+            // 경로 이동을 위한 form
+            const form = $("#form");
+            // action 값 가져오기
+            const action = '${boardVO.action}';
+            // msg 값 가져오기
             const msg = '${boardVO.msg}';
-
-            if(msg=="WRT_ERR") alert("등록 도중 에러가 발생하였습니다.");
-
-            if(msg=="MOD_ERR") alert("수정 도중 에러가 발생하였습니다.");
-
-            if(msg=="DEL_ERR") alert("삭제 도중 에러가 발생하였습니다.");
-
-
-            if(msg=="ERR_NOBOARD"){
-                alert("존재하지 않는 게시물입니다.");
-                location.href='<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
-                return;
+            // 유효성 검사
+            if(action == "" || msg == ""){
+                alert("잘못된 접근입니다.");
+                location.href="<c:url value='/'/>";
             }
+            // code 가져오기 ex) ERR_NoBoard -> NoBoard
+            const code = msg.substring(4);
+            // result 가져오기 ex) ERR_NoBoard -> ERR_
+            const result = msg.substring(0, 4);
+            // url을 담기 위한 변수
+            let url;
 
-            if(msg=="WRT_OK"){
-                alert("성공적으로 등록되었습니다.");
-                location.href="<c:url value='/board/list'/>";
-                return;
+            // action 명시
+            const action_type = {
+                "WRT" : "등록",
+                "MOD" : "수정",
+                "DEL" : "삭제",
+                "REP" : "답글 등록"
             }
-            if(msg=="MOD_OK") alert("성공적으로 수정되었습니다.");
-
-            if(msg=="DEL_OK"){
-                alert("성공적으로 삭제되었습니다.");
-                location.href='<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
-                return;
+            // err 메시지 명시
+            const err_msg = {
+                "Action" : "도중 에러가 발생하였습니다.",
+                "NoBoard" : "존재하지 않는 게시물입니다.",
+                "HaveRep" : "답글이 있는 경우 삭제할 수 없습니다."
             }
-
-            let form = $("#form");
-            form.attr('action', '<c:url value="/board/write"/>');
+            // alert 작업
+            // 성공코드일 시
+            if(result == "SUC_"){
+                alert("성공적으로 " + action_type[action] + "되었습니다.");
+            // 에러코드일 시
+            }else{
+                // result가 action중 한개일 시
+                if(result in action_type){
+                    alert(action_type[result] + err_msg["Action"]);
+                // 이외 에러일 시
+                }else{
+                    alert(err_msg[code]);
+                }
+            }
+            // url 작업
+            // 코드가 ERR일 시
+            if(code == "ERR_"){
+                // NoBoard일 시
+                if(result == "NoBoard"){
+                    url = '<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
+                // Action 혹은 HaveRep인 경우
+                }else{
+                    url = '<c:url value="/board/write"/>';
+                }
+            // 코드가 SUC일 시
+            }else{
+                // WRT일 시
+                if(result == "WRT"){
+                    url = "<c:url value='/board/list'/>";
+                // MOD일 시
+                }else if(result == "MOD"){
+                    url = '<c:url value="/board/write"/>';
+                // DEL, REP일 시
+                }else{
+                    url = '<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
+                }
+            }
+            // GET요청
+            form.attr('action', url);
             form.attr('method', 'GET');
             form.submit();
         })

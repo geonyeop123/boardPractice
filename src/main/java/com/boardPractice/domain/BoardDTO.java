@@ -16,6 +16,14 @@ public class BoardDTO {
     private String blindYn;
     private String replyTag ="";
 
+    public BoardDTO(String title, String content, String writer){
+        this.title = title;
+        this.content = content;
+        this.writer = writer;
+    }
+
+    public BoardDTO(){}
+
     public Integer getBno() {
         return bno;
     }
