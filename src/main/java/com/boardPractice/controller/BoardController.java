@@ -65,7 +65,7 @@ public class BoardController {
         // #####
         m.addAttribute(boardVO);
 
-        return ("ERR_NoBoard".equals(boardVO.getMsg()))
+        return (boardVO.getMsg() != null)
                 ? "proc"
                 : "board";
     }

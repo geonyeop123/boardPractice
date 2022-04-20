@@ -54,20 +54,28 @@ public class BoardServiceImpl implements BoardService {
         // # 변수 선언
         // #####
         BoardDTO dto = null;
+        String action = null;
 
         // #####
         // # 처리 로직
         // #####
 
-        // 1. MOD일 시 DTO 담아주기
-        if("MOD".equals(boardVO.getAction())){
-            // 2. 게시물 정보 가져오기
-            dto = boardDAO.read(boardVO.getBno());
-            // 3. 게시물이 없다면 msg에 에러 담기
-            if(dto == null) boardVO.setMsg("ERR_NoBoard");
-            // 4. 게시물이 있다면, vo에 담기
-            boardVO.setBoardDTO(dto);
-        }
+        // 1. action 값 가져오기
+        action = boardVO.getAction();
+
+        // 2. action 유효성 검사
+        if(action == null || "".equals(action)){
+            // 2-1. 없을 시 에러  담기
+            boardVO.setMsg("ERR_Path");
+        // 3. MOD일 시 DTO 담아주기
+        }else if("MOD".equals(action)){
+                // 4. 게시물 정보 가져오기
+                dto = boardDAO.read(boardVO.getBno());
+                // 5. 게시물이 없다면 msg에 에러 담기
+                if(dto == null) boardVO.setMsg("ERR_NoBoard");
+                // 6. 게시물이 있다면, vo에 담기
+                boardVO.setBoardDTO(dto);
+            }
 
         return boardVO;
     }

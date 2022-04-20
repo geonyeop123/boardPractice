@@ -38,7 +38,7 @@
             // msg 값 가져오기
             const msg = '${boardVO.msg}';
             // 유효성 검사
-            if(action == "" || msg == ""){
+            if(msg == ""){
                 alert("잘못된 접근입니다.");
                 location.href="<c:url value='/'/>";
             }
@@ -60,7 +60,8 @@
             const err_msg = {
                 "Action" : "도중 에러가 발생하였습니다.",
                 "NoBoard" : "존재하지 않는 게시물입니다.",
-                "HaveRep" : "답글이 있는 경우 삭제할 수 없습니다."
+                "HaveRep" : "답글이 있는 경우 삭제할 수 없습니다.",
+                "Path" : "올바른 경로로 접근하세요"
             }
             // alert 작업
             // 성공코드일 시
@@ -82,6 +83,9 @@
                 // NoBoard일 시
                 if(result == "NoBoard"){
                     url = '<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
+                // Path일 시
+                }else if(result == "Path"){
+                    url = "<c:url value='/'/>";
                 // Action 혹은 HaveRep인 경우
                 }else{
                     url = '<c:url value="/board/write"/>';
@@ -99,6 +103,7 @@
                     url = '<c:url value="/board/list"/>?page=${boardVO.page}&pageSize=${boardVO.pageSize}';
                 }
             }
+            location.
             // GET요청
             form.attr('action', url);
             form.attr('method', 'GET');

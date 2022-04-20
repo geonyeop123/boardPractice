@@ -64,19 +64,21 @@
                 </c:choose>
                 </tbody>
             </table>
-            <div class="page_wrap">
-                <div class="page_nation">
-                    <c:if test="${boardVO.pageMaker.prev}">
-                        <a class="arrow prev" href="/board/list?page=${boardVO.pageMaker.startPage - 1}&pageSize=${boardVO.pageMaker.pageSize}">&lt;</a>
-                    </c:if>
+            <c:if test="${boardVO.list != null}">
+                <div class="page_wrap">
+                    <div class="page_nation">
+                        <c:if test="${boardVO.pageMaker.prev}">
+                            <a class="arrow prev" href="/board/list?page=${boardVO.pageMaker.startPage - 1}&pageSize=${boardVO.pageMaker.pageSize}">&lt;</a>
+                        </c:if>
                         <c:forEach var="i" begin="${boardVO.pageMaker.startPage}" end="${boardVO.pageMaker.endPage}">
                             <a class="${boardVO.pageMaker.page == i ? "active" : ""}"href="/board/list?page=${i}&pageSize=${boardVO.pageMaker.pageSize}">${i}</a>
                         </c:forEach>
-                    <c:if test="${boardVO.pageMaker.next}">
-                        <a class="arrow next" href="/board/list?page=${boardVO.pageMaker.endPage + 1}&pageSize=${boardVO.pageMaker.pageSize}">&gt;</a>
-                    </c:if>
+                        <c:if test="${boardVO.pageMaker.next}">
+                            <a class="arrow next" href="/board/list?page=${boardVO.pageMaker.endPage + 1}&pageSize=${boardVO.pageMaker.pageSize}">&gt;</a>
+                        </c:if>
+                    </div>
                 </div>
-            </div>
+            </c:if>
         </div>
     </div>
     <script>
