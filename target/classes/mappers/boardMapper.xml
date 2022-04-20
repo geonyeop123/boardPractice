@@ -3,19 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.boardPractice.mapper.BoardMapper">
-    <insert id="createParent">
-        <![CDATA[
-        INSERT INTO TBL_BOARD(ref, title, content, writer)
-        VALUES((SELECT IFNULL(MAX(ref), 0)+1 FROM TBL_BOARD B) , #{title}, #{content}, #{writer})
-        ]]>
-    </insert>
-
-    <insert id="createChild">
-        <![CDATA[
-        INSERT INTO TBL_BOARD(ref, step, depth, title, content, writer)
-        VALUES(#{ref}, #{step}, #{depth}, #{title}, #{content}, #{writer})
-        ]]>
-    </insert>
 
     <insert id="create">
         INSERT INTO TBL_BOARD(ref, step, depth, title, content, writer)
@@ -32,7 +19,8 @@
     <select id="select" resultType="boardDTO">
         SELECT bno, ref, step, depth, title, content, writer, regdate, blind_yn AS 'blindYn'
         FROM tbl_board
-        where bno = #{bno}
+        WHERE bno = #{bno}
+        AND blind_yn = 'N'
     </select>
 
     <update id="update">
@@ -40,6 +28,7 @@
         SET title =#{title}, content =#{content}
         WHERE bno = #{bno}
         AND writer = #{writer}
+        AND blind_yn = 'N'
     </update>
 
     <select id="deleteCheck" resultType="int">

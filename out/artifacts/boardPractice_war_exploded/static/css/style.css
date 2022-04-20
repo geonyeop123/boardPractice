@@ -165,3 +165,7 @@ table.board_table td:last-child {
 .reply_tag{
     color:red;
 }
+.center_txt{
+    text-align : center;
+    font-weight : 700;
+}

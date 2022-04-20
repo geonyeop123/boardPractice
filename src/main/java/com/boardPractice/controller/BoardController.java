@@ -72,7 +72,6 @@ public class BoardController {
 
     @PostMapping("/proc")
     public String proc(BoardVO boardVO, Model m)throws Exception{
-        System.out.println(boardVO);
 
         // #####
         // # 처리 로직

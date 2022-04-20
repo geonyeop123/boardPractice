@@ -21,21 +21,29 @@ public class BoardServiceImpl implements BoardService {
         // # 변수 선언
         // #####
         PageMaker pm = null;
+        int totalCnt = 0;
 
         // #####
         // # 처리 로직
         // #####
 
         // 1. 페이징을 위한 처리
-        pm = new PageMaker(boardVO.getPage(), boardVO.getPageSize(), boardDAO.totalCnt());
 
-        // 1-1. 페이징 정보 VO에 담기
-        boardVO.setPageMaker(pm);
+        // 1-1. 게시물 총 개수를 가져온다.
+        totalCnt = boardDAO.totalCnt();
 
-        // 2. 게시판에 보여줄 List 얻어와 VO에 담기
-        boardVO.setList(boardDAO.listAll(boardVO));
+        // 1-2. 게시물 총 개수가 0이 아닐 시
+        if(totalCnt != 0) {
+            pm = new PageMaker(boardVO.getPage(), boardVO.getPageSize(), totalCnt);
 
-        // 4. List 반환
+            // 1-1. 페이징 정보 VO에 담기
+            boardVO.setPageMaker(pm);
+
+            // 2. 게시판에 보여줄 List 얻어와 VO에 담기
+            boardVO.setList(boardDAO.listAll(boardVO));
+        }
+
+        // 4. List를 담은 VO 반환
         return boardVO;
     }
 
@@ -97,7 +105,6 @@ public class BoardServiceImpl implements BoardService {
             } else {
                 // 2-2-1. 현재 게시물을 currentDTO에 담기
                 currentDTO = boardDAO.read(boardVO.getBno());
-
                 // 2-2-2. 만일, 현재 게시물이 없다면, error 메시지 담기
                 if (currentDTO == null) {
                     message.append("ERR_NoBoard");
@@ -123,10 +130,12 @@ public class BoardServiceImpl implements BoardService {
                         // 2-4-3. 없다면 삭제 진행
                         }else{
 
+                            // 2-4-5. 현재 게시물보다 높은 depth를 가진 게시물들의 depth를 -1씩 해주기
+                            boardDAO.deleteUpdateDepth(currentDTO);
+
                             // 2-4-4. 게시물 삭제
                             resultCnt = boardDAO.delete(boardVO.getBno());
-                            // 2-4-5. 현재 게시물보다 높은 depth를 가진 게시물들의 depth를 -1씩 해주기
-                            resultCnt = boardDAO.deleteUpdateDepth(currentDTO);
+
                         }
                     // 2-5-1. REP(답글)인 경우
                     } else if ("REP".equals(boardVO.getAction())){

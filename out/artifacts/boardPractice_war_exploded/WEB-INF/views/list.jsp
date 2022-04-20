@@ -42,24 +42,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${boardVO.list}" var="list">
-                    <tr>
-                        <th scope="row">${list.bno}</th>
-                        <td class="table_title">
-                            <a href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
-                                <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>
-                                    ${list.title}
-                            </a>
-                        </td>
-                        <td>${list.writer}</td>
-                        <td><fmt:formatDate pattern="yyyy.MM.dd hh:mm" value="${list.regdate}"/></td>
-                    </tr>
-                </c:forEach>
+                <c:choose>
+                <c:when test="${boardVO.list == null}">
+                    <tr><td colspan="7" class="center_txt">게시물이 없습니다.</td></tr>
+                </c:when>
+                    <c:otherwise>
+                        <c:forEach items="${boardVO.list}" var="list">
+                            <tr>
+                                <th scope="row">${list.bno}</th>
+                                <td class="table_title">
+                                    <a href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
+                                        <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>
+                                            ${list.title}
+                                    </a>
+                                </td>
+                                <td>${list.writer}</td>
+                                <td><fmt:formatDate pattern="yyyy.MM.dd hh:mm" value="${list.regdate}"/></td>
+                            </tr>
+                        </c:forEach>
+                    </c:otherwise>
+                </c:choose>
                 </tbody>
             </table>
-            <c:if test="${boardVO.list == null}">
-                <div>게시물이 없습니다.</div>
-            </c:if>
             <div class="page_wrap">
                 <div class="page_nation">
                     <c:if test="${boardVO.pageMaker.prev}">
