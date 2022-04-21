@@ -9,6 +9,7 @@ public class PageMaker {
     private int naviSize = 10;
     private int startPage;
     private int endPage;
+    private int startNumber;
     private boolean prev;
     private boolean next;
 
@@ -23,6 +24,7 @@ public class PageMaker {
         endPage = Math.min(startPage + naviSize - 1, (int)Math.ceil(totalCnt / (double)naviSize));
         prev = startPage != 1 ? true  : false;
         next = endPage < (int)Math.ceil(totalCnt / (double)naviSize) ? true : false;
+        startNumber = totalCnt - ((page - 1) * pageSize);
     }
 
     public int getPage() {
@@ -88,6 +90,9 @@ public class PageMaker {
     public void setNext(boolean next) {
         this.next = next;
     }
+
+    public int getStartNumber(){ return this.startNumber; }
+
 
     public void showPage(){
         System.out.println("page : " + page);

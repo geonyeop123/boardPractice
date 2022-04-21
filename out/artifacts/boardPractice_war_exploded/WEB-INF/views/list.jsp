@@ -47,9 +47,9 @@
                     <tr><td colspan="7" class="center_txt">게시물이 없습니다.</td></tr>
                 </c:when>
                     <c:otherwise>
-                        <c:forEach items="${boardVO.list}" var="list">
+                        <c:forEach items="${boardVO.list}" var="list" varStatus="status">
                             <tr>
-                                <th scope="row">${list.bno}</th>
+                                <th scope="row">${boardVO.pageMaker.startNumber - status.index}</th>
                                 <td class="table_title">
                                     <a href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
                                         <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>

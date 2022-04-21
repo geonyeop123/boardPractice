@@ -57,26 +57,39 @@ public class BoardController {
         // # 처리 로직
         // #####
 
+        if( ("REP".equals(boardVO.getAction()) || "MOD".equals(boardVO.getAction()))
+                && boardVO.getBno() == null){
+            boardVO.setMsg("ERR_Path");
+        }else{
             // 1. action에 따른 boardVO 값 가져오기
             boardVO = service.write(boardVO);
+        }
 
         // #####
         // # 반환
         // #####
         m.addAttribute(boardVO);
 
-        return (boardVO.getMsg() != null)
-                ? "proc"
-                : "board";
+        // msg가 생성되었으면 proc로, 아니면 board로 이동
+        return ("".equals(boardVO.getMsg()))
+                ? "board"
+                : "proc";
     }
 
     @PostMapping("/proc")
     public String proc(BoardVO boardVO, Model m)throws Exception{
+        System.out.println(boardVO);
+        // 검증
+         if (-1 < "WRT|MOD|DEL|REP".indexOf(boardVO.getAction())){
 
-        // #####
-        // # 처리 로직
-        // #####
-        boardVO = service.proc(boardVO);
+             // #####
+             // # 처리 로직
+             // #####
+             boardVO = service.proc(boardVO);
+
+         }else{
+             boardVO.setMsg("ERR_Path");
+         }
 
         // #####
         // # 반환
