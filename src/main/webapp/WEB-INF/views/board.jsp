@@ -70,6 +70,7 @@
                     alert("제목 혹은 본문 내용은 필수입니다.");
                     return;
                 }
+                if(title.length > 256) alert("제목이 너무 길어요");
                 form.attr('action', '<c:url value="/board/proc"/>');
                 form.attr('method', 'post');
                 form.submit();

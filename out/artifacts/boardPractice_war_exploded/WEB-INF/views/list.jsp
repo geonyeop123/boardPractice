@@ -53,7 +53,7 @@
                                 <td class="table_title">
                                     <a href='<c:url value="/board/write?page=${boardVO.pageMaker.page}&pageSize=${boardVO.pageMaker.pageSize}&bno=${list.bno}&action=MOD"/>'>
                                         <c:if test="${list.step != 0}"><span class="reply_tag">${list.replyTag}Re :</span></c:if>
-                                            ${list.title}
+                                        ${(list.title.length() < 30) ? list.title : list.title.substring(0, 30) += "..."}
                                     </a>
                                 </td>
                                 <td>${list.writer}</td>
