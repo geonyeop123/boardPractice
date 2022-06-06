@@ -39,6 +39,9 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-core:5.3.19" />
           <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.3.19" />
           <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.3.19" />
+          <element id="library" level="project" name="Maven: commons-fileupload:commons-fileupload:1.4" />
+          <element id="library" level="project" name="Maven: commons-io:commons-io:2.2" />
+          <element id="library" level="project" name="Maven: org.imgscalr:imgscalr-lib:4.2" />
         </element>
       </element>
     </root>
